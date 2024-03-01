@@ -1,12 +1,17 @@
-# 🎮 GamePixel - Visualisation des données de l'histoire des jeux vidéo
+# 🎮 GamePixel - Visualisation des données de l'histoire graphique des jeux vidéo
 
 ## ✍️ Contexte
 
-Les données utilisées dans ce projet proviennent de [Kaggle](https://www.kaggle.com), une plateforme de data science. Elles ont été mises à disposition par Simon Garanin. Les données ont été extraites à partir du site web [backloggd.com](https://backloggd.com). Les données sont récentes puiqu'elles datent du 02/10/2023.
+[TODO]: <Contexte : Directement les data exploitées plutôt que le sujet ?>
+
+Les données utilisées dans ce projet proviennent de [Kaggle](https://www.kaggle.com), une plateforme de data science. Elles ont été mises à disposition par Simon Garanin. Les données ont été extraites à partir du site web [backloggd.com](https://backloggd.com). Ces données, datant du 02/10/2023, sont complétées par des informations supplémentaires provenant de diverses sources, consolidées pour créer notre propre dataset personnalisé.
 
 ## 📖 Description
 
-Les données sont structurées dans un fichier CSV. Elles contiennent 14 colonnes et 101716 lignes.
+[TODO]: <Seulement les colonnes qu'on exloite ?>
+[TODO]: <Seulement un tableau complet avec le dataset personnalisé ?>
+
+Les données sont structurées dans un fichier CSV. Elles contiennent 14 colonnes et 101'716 lignes.
 
 Les colonnes sont les suivantes:
 
@@ -29,9 +34,13 @@ Les colonnes sont les suivantes:
 
 ## 🎯 But
 
-Le but de ce projet est d'explorer l'histoire des jeux vidéo. Découvrir les tendances, les genres les plus populaires en remontant dans le temps. Nous allons mettre en avant un jeu par avancée technologique majeure tout en présentant l'état du marché des jeux vidéo à cette époque afin de pouvoir comparer les évolutions et les tendances du marché des jeux vidéo.
+[TODO]: <Vérifier que ce qui est dit là correspond à ce qu'on présentera>
+
+Le but de ce projet est d'explorer l'histoire graphique des jeux vidéo. Découvrir les tendances, les genres les plus populaires en remontant dans le temps. Nous allons mettre en avant un jeu par avancée technologique graphique majeure tout en présentant l'état du marché des jeux vidéo à cette époque afin de pouvoir comparer les évolutions et les tendances du marché des jeux vidéo.
 
 ## 📚 Références
+
+[TODO]: <Ajouter les ressources pour les data supplémentaires>
 
 - Pour réaliser ce projet, nous avons utilisé les données provenant de [Kaggle](https://www.kaggle.com/datasets/gsimonx37/backloggd)
 - Ces données ont également été utilisées à des fins de statistiques sur le répertoire [GitHub](https://github.com/GSimonX37/Backloggd)
