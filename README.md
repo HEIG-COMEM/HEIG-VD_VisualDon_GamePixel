@@ -32,6 +32,36 @@ Les colonnes sont les suivantes:
 | `wishlists`       | nombre d'ajouts à la liste de souhaits                                    | `Decimal`       |
 | `description`     | description du jeu vidéo                                                  | `String`        |
 
+### 🚀 Application dynamique
+
+Afin de permettre un evolutivité de l'application, nous avons décidé de créer une application dynamique. Cela signifie que l'application est capable de s'adapter à de nouvelles données. Ainsi, si de nouvelles données sont ajoutées, l'application pourra les prendre en compte et les afficher.
+
+Pour ce faire nous avons besoin de créer notre propore fichier de données qui contiendra les données a afficher. Ce fichier sera un fichier JSON qui contiendra les données suivantes:
+
+```json
+{
+  "events": [
+    {
+      "name": "nom de l'événement",
+      "date": "date de l'événement",
+      "description": "description de l'événement",
+      "games": [
+        {
+          "name": "nom du jeu",
+          "date": "date de sortie du jeu",
+          "description": "description du jeu",
+          "poster": "lien vers l'image du jeu",
+          "rating": "note moyenne du jeu",
+          "plays": "nombre total de joueurs",
+          "genres": ["genre 1", "genre 2", "..."],
+          "platforms": ["plateforme 1", "plateforme 2", "..."]
+        }
+      ]
+    }
+  ]
+}
+```
+
 ## 🎯 But
 
 [TODO]: <Vérifier que ce qui est dit là correspond à ce qu'on présentera>
