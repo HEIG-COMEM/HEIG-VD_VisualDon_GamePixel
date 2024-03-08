@@ -34,7 +34,7 @@ Les colonnes sont les suivantes:
 
 ### 🚀 Application dynamique
 
-Afin de permettre un evolutivité de l'application, nous avons décidé de créer une application dynamique. Cela signifie que l'application est capable de s'adapter à de nouvelles données. Ainsi, si de nouvelles données sont ajoutées, l'application pourra les prendre en compte et les afficher.
+Afin de permettre une évolutivité de l'application, nous avons décidé de créer une application dynamique. Cela signifie que l'application est capable de s'adapter à de nouvelles données. Ainsi, si de nouvelles données sont ajoutées, l'application pourra les prendre en compte et les afficher.
 
 Pour ce faire nous avons besoin de créer notre propore fichier de données qui contiendra les données a afficher. Ce fichier sera un fichier JSON qui contiendra les données suivantes:
 
