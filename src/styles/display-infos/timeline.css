@@ -1,0 +1,52 @@
+#timeline {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 4em;
+    margin-top: 6rem;
+    max-width: 85vw;
+    /* overflow-x: hidden; */
+}
+
+#timeline a {
+    text-decoration: none;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    transition: all 0.1s ease-in-out;
+
+    color: var(--dark-grey);
+    font-size: 2.6875rem;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+}
+
+
+#timeline a.active {
+    color: var(--white);
+    font-size: 6.3125rem;
+    font-style: normal;
+    font-weight: 900;
+    line-height: normal;
+}
+
+/* Select the previous and next a elt of the active one */
+#timeline a:has(+ a.active),
+#timeline a.active + a {
+    color: var(--grey);
+    font-size: 4.75rem;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+}
+
+/* Select the 2nd previous and 2nd next a elt of the active one */
+#timeline a:has(+ * + a.active),
+#timeline a.active + * + a {
+    color: var(--light-grey);
+    font-size: 3.5625rem;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+}

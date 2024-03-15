@@ -1,12 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GamePixel</title>
-</head>
-<body>
-    
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Icons"
+    />
+    <link rel="stylesheet" href="src/styles/index.css" />
+  </head>
+  <body>
+    <main>
+      <section id="start">
+        <h1 class="hero">GamePixel</h1>
+        <div class="divider"></div>
+        <h4>Visualisation des données de l'histoire des jeux vidéo</h4>
+        <a class="scroll-animation-group" href="#infos-display">
+          <span class="material-icons">mouse</span>
+          <span class="material-icons">keyboard_double_arrow_down</span>
+        </a>
+      </section>
+      <section id="infos-display">
+        <div id="timeline">
+        </div>
+        <div id="events-carousel">
+          <div id="prev">
+            <span class="material-icons">keyboard_arrow_left</span>
+          </div>
+          <div id="events"></div>
+          <div id="next">
+            <span class="material-icons">keyboard_arrow_right</span>
+          </div>
+        </div>
+      </section>
+    </main>
     <script type="module" src="src/index.js"></script>
-</body>
+  </body>
 </html>

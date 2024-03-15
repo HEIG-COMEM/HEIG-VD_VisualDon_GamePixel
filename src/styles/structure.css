@@ -1,0 +1,33 @@
+body {
+    background-color: var(--dark);
+    margin: 0;
+    scroll-behavior: smooth;
+}
+
+main {
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 100vh;
+}
+
+section {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100vh;
+
+    scroll-snap-align: start;
+}
+
+section#start {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.divider {
+    width: 4rem;
+    height: 2px;
+    background-color: var(--gold);
+}

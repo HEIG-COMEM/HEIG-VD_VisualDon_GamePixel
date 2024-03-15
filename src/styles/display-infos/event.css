@@ -1,0 +1,94 @@
+#events-carousel {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10em;
+    margin-top: 2rem;
+}
+
+/* select only the first and last div */
+#events-carousel > div:first-child,
+#events-carousel > div:last-child {
+    border-radius: 50%;
+    border: .3rem solid var(--gold);
+    cursor: pointer;
+    user-select: none;
+}
+
+#events-carousel > div:first-child span,
+#events-carousel > div:last-child span {
+    color: var(--gold);
+    font-size: 3.5rem;
+}
+
+#events {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10em;
+    width: 70vw;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    scrollbar-width: none;
+
+    /* TODO: Fix */
+    /* scroll-snap-type: x mandatory; */
+}
+
+#infos-display .event {
+    /* display: none; */
+    opacity: .2;
+    height: auto;
+
+    padding: 0rem 4rem;
+
+    /* TODO: Fix */
+    scroll-snap-align: center;
+    scroll-snap-stop: normal;
+
+    transition: all 0.3s ease-in-out;
+}
+
+#infos-display .event.active {
+    opacity: 1;
+    /* display: block; */
+}
+
+.event h2 {
+    font-size: 4rem;
+    font-style: normal;
+    font-weight: 900;
+}
+
+.event h3 {
+    font-size: 3.5625rem;
+    font-style: normal;
+    font-weight: 900;
+}
+
+.event h4 {
+    margin: 0;
+    font-size: 2rem;
+    font-style: normal;
+    font-weight: 900;
+}
+
+.event p {
+    font-size: 1.125rem;
+    font-style: normal;
+    font-weight: 900;
+}
+
+.event .graphs {
+    display: flex;
+    flex-direction: row;
+    gap: 2em;
+    margin-top: 7rem;
+}
+
+.event .graphs div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+}
