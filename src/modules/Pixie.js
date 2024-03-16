@@ -1,6 +1,6 @@
 export default class Pixie {
     #defaultSize = 10;
-    #idleSize = 50;
+    #idleSize = 30;
 
     #elt;
     #isIdle = false;
