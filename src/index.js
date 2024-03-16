@@ -1,10 +1,10 @@
 import { displayEvent, isElementInViewport } from './helper.js';
-import Pixie from './modules/Pixie.js';
 import EventManager from './modules/EventManager.js';
 
 import './elements/event-item.js';
 import './elements/game-item.js';
 
+import './pixieScript.js';
 import './modules/timeline.js';
 
 new EventManager();
@@ -22,7 +22,7 @@ const router = () => {
                 displayEvent(hashs.at(1));
             }
             else {
-                console.log(hash);
+                displayEvent();
             }
             break;
     }
