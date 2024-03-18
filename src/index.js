@@ -6,6 +6,7 @@ import './elements/game-item.js';
 
 import './pixieScript.js';
 import './modules/timeline.js';
+import './modules/section.js';
 
 new EventManager();
 
@@ -24,6 +25,11 @@ const router = () => {
             else {
                 displayEvent();
             }
+            break;
+
+        case '#start_journey':
+            const next = document.querySelector('#start').nextElementSibling;
+            window.location.hash = `${next.id}`;
             break;
     }
 }

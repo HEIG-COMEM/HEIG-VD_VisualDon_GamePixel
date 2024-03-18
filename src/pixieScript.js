@@ -71,9 +71,7 @@ Object.keys(SCRIPT).forEach(key => {
     const triggerSection = document.querySelector(`#${script.trigger_id}`);
     if (!triggerSection) return console.error(`Trigger section not found: ${script.trigger_id}`);
 
-    document.querySelector("main").addEventListener('scroll', () => {
-        if (!isElementInViewport(triggerSection)) return;
-
+    triggerSection.addEventListener('section_visible', () => {
         async function runScript() {
             if (script.count >= 1 && !script.isRepeatable) return;
             if (!script.isSkippable) {
@@ -97,5 +95,5 @@ Object.keys(SCRIPT).forEach(key => {
         }
 
         runScript();
-    });
+    }, { once: !script.isRepeatable });
 });
