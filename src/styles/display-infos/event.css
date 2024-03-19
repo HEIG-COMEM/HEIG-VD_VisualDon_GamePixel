@@ -3,7 +3,6 @@
     flex-direction: row;
     align-items: center;
     gap: 10em;
-    margin-top: 2rem;
 }
 
 /* select only the first and last div */
@@ -57,12 +56,14 @@ event-item {
     font-size: 4rem;
     font-style: normal;
     font-weight: 900;
+    margin-bottom: 0;
 }
 
 .event h3 {
     font-size: 3.5625rem;
     font-style: normal;
     font-weight: 900;
+    margin-bottom: 0;
 }
 
 .event h4 {
@@ -73,9 +74,8 @@ event-item {
 }
 
 .event p {
-    font-size: 1.125rem;
+    font-size: 1.5rem;
     font-style: normal;
-    font-weight: 900;
 }
 
 .event .graphs {
