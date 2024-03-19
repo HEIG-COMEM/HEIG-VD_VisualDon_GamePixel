@@ -65,3 +65,26 @@ events.addEventListener("wheel", function (e) {
         prev.scrollIntoView({ behavior: "smooth" });
     }
 });
+
+// DEBUG
+const targetNode = timeline;
+const config = { attributes: true, childList: true, subtree: true };
+
+const callback = (mutationList, observer) => {
+    for (const mutation of mutationList) {
+        if (mutation.type === "attributes" && mutation.target.classList.contains("active")) {
+            const active = mutation.target;
+
+            const timelineWidth = timeline.clientWidth;
+            const activeWidth = active.clientWidth;
+            const activeOffset = active.offsetLeft;
+            const activeCenter = activeWidth / 2;
+            const timelineCenter = timelineWidth / 2;
+            const translateX = timelineCenter - activeOffset - activeCenter;
+            // timeline.style.transform = `translateX(${translateX}px)`;
+        }
+    }
+};
+
+const timelineObserver = new MutationObserver(callback);
+timelineObserver.observe(targetNode, config);

@@ -4,9 +4,9 @@
 	align-items: stretch;
 	gap: 4em;
 	margin-top: 6rem;
-	max-width: 85vw;
+	max-width: 70vw;
 	min-height: 6.3125rem;
-	/* overflow-x: hidden; */
+	overflow-x: hidden;
 }
 
 #timeline a {

@@ -21,6 +21,7 @@ const scrollToEvent = (year) => {
 	event.scrollIntoView({ behavior: "smooth" });
 };
 
+// TODO: Refactor using IntersectionObserver (https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API#creating_an_intersection_observer)
 const isElementInViewport = (el) => {
 	const rect = el.getBoundingClientRect();
 	return (
