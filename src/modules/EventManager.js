@@ -1,4 +1,4 @@
-const enventsReady = new CustomEvent("events_ready");
+const eventsReady = new CustomEvent("events_ready");
 
 export default class EventManager {
     #events;
@@ -21,7 +21,7 @@ export default class EventManager {
                 this.#renderTimeline();
             })
             .then(() => {
-                document.dispatchEvent(enventsReady);
+                document.dispatchEvent(eventsReady);
             });
     }
 

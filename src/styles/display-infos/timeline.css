@@ -1,3 +1,5 @@
+/* TODO:fix timeline */
+
 #timeline {
 	display: flex;
 	flex-direction: row;
@@ -16,7 +18,7 @@
 	transition: all 0.1s ease-in-out;
 
 	color: var(--dark-grey);
-	font-size: 2.6875rem;
+	/* font-size: 2.6875rem; */
 	font-style: normal;
 	font-weight: 800;
 	line-height: normal;
@@ -24,7 +26,7 @@
 
 #timeline a.active {
 	color: var(--white);
-	font-size: 6.3125rem;
+	/* font-size: 6.3125rem; */
 	font-style: normal;
 	font-weight: 900;
 	line-height: normal;
@@ -34,7 +36,7 @@
 #timeline a:has(+ a.active),
 #timeline a.active + a {
 	color: var(--grey);
-	font-size: 4.75rem;
+	/* font-size: 4.75rem; */
 	font-style: normal;
 	font-weight: 800;
 	line-height: normal;
@@ -44,7 +46,7 @@
 #timeline a:has(+ * + a.active),
 #timeline a.active + * + a {
 	color: var(--light-grey);
-	font-size: 3.5625rem;
+	/* font-size: 3.5625rem; */
 	font-style: normal;
 	font-weight: 800;
 	line-height: normal;

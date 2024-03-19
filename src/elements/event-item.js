@@ -7,7 +7,7 @@ class EventItem extends HTMLElement {
         const gamesHTML = games
             .map((game) => `<game-item title="${game.name}" image="${game.poster}"></game-item>`)
             .join("");
-        this.innerHTML = `<div class="event" id="event-${year}">
+        this.innerHTML = `<div class="event" data-id="event-${year}">
                             <h2>${title}</h2>
                             <p>${description}</p>
                             <h3>Jeux populaires</h3>
