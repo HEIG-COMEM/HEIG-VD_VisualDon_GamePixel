@@ -1,5 +1,3 @@
-const displaySection = (id) => {};
-
 const displayEvent = (year = null) => {
 	if (!year) {
 		const first = document.querySelector("#timeline a").getAttribute("href").split("#").at(-1);
@@ -13,8 +11,14 @@ const displayEvent = (year = null) => {
 	oldSection?.classList?.remove("active");
 	newSection?.classList?.add("active");
 
+	const timeline = document.querySelector("#timeline");
 	timeline.querySelector(".active")?.classList.remove("active");
 	timeline.querySelector(`[href="#${year}"]`).classList.add("active");
+};
+
+const scrollToEvent = (year) => {
+	const event = document.querySelector(`event-item div[data-id="event-${year}"]`);
+	event.scrollIntoView({ behavior: "smooth" });
 };
 
 const isElementInViewport = (el) => {
@@ -27,4 +31,4 @@ const isElementInViewport = (el) => {
 	);
 };
 
-export { displayEvent, displaySection, isElementInViewport };
+export { displayEvent, isElementInViewport, scrollToEvent };

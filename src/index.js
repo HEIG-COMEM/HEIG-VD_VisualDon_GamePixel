@@ -1,4 +1,4 @@
-import { displayEvent, isElementInViewport } from "./helper.js";
+import { displayEvent } from "./helper.js";
 import EventManager from "./modules/EventManager.js";
 
 import "./elements/event-item.js";
@@ -7,7 +7,6 @@ import "./elements/game-item.js";
 import "./pixieScript.js";
 import "./modules/timeline.js";
 import "./modules/section.js";
-import { select } from "d3-selection";
 
 new EventManager();
 
@@ -36,24 +35,3 @@ const router = () => {
 
 window.addEventListener("hashchange", router);
 document.addEventListener("events_ready", () => router()); // Wait for the events to be ready before routing
-
-// DEBUG
-// select the div with the id "events" with d3
-const events = select("#events");
-// translate to the next event-item with d3 when scrolling
-events.on("wheel", function (e) {
-	e.preventDefault();
-	const active = document.querySelector("event-item .active");
-	if (!active) return;
-	const delta = e.deltaY;
-	const next = active.parentElement.nextElementSibling;
-	const prev = active.parentElement.previousElementSibling;
-
-	if (delta > 0 && next) {
-		window.location.hash = `event-${next.getAttribute("year")}`;
-		next.scrollIntoView({ behavior: "smooth" });
-	} else if (delta < 0 && prev) {
-		window.location.hash = `event-${prev.getAttribute("year")}`;
-		prev.scrollIntoView({ behavior: "smooth" });
-	}
-});

@@ -29,14 +29,6 @@
 	overflow-x: scroll;
 	overflow-y: hidden;
 	scrollbar-width: none;
-
-	/* TODO: Fix */
-	/* scroll-snap-type: x mandatory; */
-}
-
-event-item {
-	scroll-snap-align: start;
-	/* scroll-snap-stop: normal; */
 }
 
 #infos-display .event {
@@ -49,7 +41,6 @@ event-item {
 
 #infos-display .event.active {
 	opacity: 1;
-	/* display: block; */
 }
 
 .event h2 {
