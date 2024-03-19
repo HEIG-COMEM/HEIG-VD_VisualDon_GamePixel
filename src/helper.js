@@ -18,7 +18,7 @@ const displayEvent = (year = null) => {
 
 const scrollToEvent = (year) => {
 	const event = document.querySelector(`event-item div[data-id="event-${year}"]`);
-	event.scrollIntoView({ behavior: "smooth" });
+	event?.scrollIntoView({ behavior: "smooth" });
 };
 
 const isElementInViewport = (el) => {
@@ -31,4 +31,13 @@ const isElementInViewport = (el) => {
 	);
 };
 
-export { displayEvent, isElementInViewport, scrollToEvent };
+const showCard = (name) => {
+	name = decodeURIComponent(name).split("_").join("-");
+	document.querySelector(`game-card[title="${name}"]`)?.firstChild.classList.add("active");
+};
+
+const hideCard = () => {
+	document.querySelector("#game-cards .active")?.classList.remove("active");
+};
+
+export { displayEvent, isElementInViewport, scrollToEvent, showCard, hideCard};
