@@ -6,7 +6,7 @@
 	margin-top: 1rem;
 }
 
-.game-card {
+.game-item {
 	display: flex;
 	flex-direction: column-reverse;
 	border-radius: 1.125rem;
@@ -20,16 +20,92 @@
 	transition: all 0.3s ease-in-out;
 }
 
-.game-card:hover {
+.game-item:hover {
 	transform: scale(1.1);
 }
 
-.games:hover .game-card:not(:hover) {
+.games:hover .game-item:not(:hover) {
 	opacity: 0.1;
 }
 
-.game-card span {
+.game-item span {
 	font-size: 1.25rem;
 	font-weight: 900;
 	margin-left: 1rem;
+}
+
+#game-cards {
+	display: none;
+}
+
+#game-cards:has(.active) {
+	position: absolute;
+	display: flex;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+
+	width: 100vw;
+	height: 100vh;
+	justify-content: center;
+	align-items: center;
+
+	background-color: var(--dark-opacity);
+	z-index: 100;
+}
+
+game-card {
+	position: absolute;
+	width: 40vw;
+	height: 70vh;
+}
+
+.game-card {
+	border-radius: 1.125rem;
+	background: linear-gradient(180deg, #20202000 0%, #202020 100%), var(--background-image);
+	background-size: cover;
+	background-repeat: no-repeat;
+	position: absolute;
+	display: none;
+
+	width: 40vw;
+	height: 70vh;
+	flex-direction: column;
+	justify-content: end;
+	padding: 1rem;
+
+	z-index: 1;
+}
+
+.game-card.active {
+	display: flex;
+	z-index: 101;
+}
+
+.genres {
+	display: flex;
+	flex-direction: row;
+
+	gap: 1rem;
+}
+
+.genres span {
+	border-color: var(--white);
+	border-radius: 50px;
+	border-style: solid;
+	padding: 4px 10px;
+
+	font-weight: 700;
+}
+
+.game-card .title {
+	margin-top: 4px;
+	font-size: 2.5rem;
+	font-weight: 900;
+}
+
+.game-card p {
+	font-size: 1.1rem;
+	font-weight: 500;
+	margin-top: 8px;
 }
