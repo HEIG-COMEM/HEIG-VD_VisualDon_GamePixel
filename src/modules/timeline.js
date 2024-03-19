@@ -37,11 +37,3 @@ document.querySelector("#events-carousel").addEventListener('click', (e) => {
             break;
     }
 });
-
-// Redirect horizontal scroll to timeline
-const scrollContainer = document.querySelector("#events");
-
-scrollContainer.addEventListener("wheel", (e) => {
-    e.preventDefault();
-    scrollContainer.scrollLeft += e.deltaY;
-});
