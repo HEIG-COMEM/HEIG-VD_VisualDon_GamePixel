@@ -1,4 +1,4 @@
-const enventsReady = new CustomEvent('events_ready');
+const enventsReady = new CustomEvent("events_ready");
 
 export default class EventManager {
     #events;
@@ -8,9 +8,9 @@ export default class EventManager {
     }
 
     async #loadData() {
-        await fetch('/src/data/events.json')
-            .then(response => response.json())
-            .then(data => {
+        await fetch("/src/data/events.json")
+            .then((response) => response.json())
+            .then((data) => {
                 this.#events = data.events;
             })
             .then(() => {
@@ -26,23 +26,23 @@ export default class EventManager {
     }
 
     #renderEvents() {
-        this.#events.forEach(event => {
-            const eventItem = document.createElement('event-item');
+        this.#events.forEach((event) => {
+            const eventItem = document.createElement("event-item");
 
-            eventItem.setAttribute('year', event.date);
-            eventItem.setAttribute('title', event.name);
-            eventItem.setAttribute('description', event.description);
-            eventItem.setAttribute('games', JSON.stringify(event.games));
+            eventItem.setAttribute("year", event.date);
+            eventItem.setAttribute("title", event.name);
+            eventItem.setAttribute("description", event.description);
+            eventItem.setAttribute("games", JSON.stringify(event.games));
 
-            document.querySelector('#infos-display #events').appendChild(eventItem);
+            document.querySelector("#infos-display #events").appendChild(eventItem);
         });
     }
 
     #renderTimeline() {
         const time = [];
-        this.#events.forEach(event => time.push(event.date));
-        const html = time.reduce((acc, year) => acc + `<a href="#${year}">${year}</a>`, '');
-        const timeline = document.querySelector('#timeline');
+        this.#events.forEach((event) => time.push(event.date));
+        const html = time.reduce((acc, year) => acc + `<a href="#${year}">${year}</a>`, "");
+        const timeline = document.querySelector("#timeline");
         timeline.innerHTML = html;
     }
 }

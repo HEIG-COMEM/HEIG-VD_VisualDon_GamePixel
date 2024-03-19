@@ -9,14 +9,14 @@ export default class Pixie {
     #position = { x: 0, y: 0 };
 
     constructor() {
-        if (document.getElementById('pixie')) return;
+        if (document.getElementById("pixie")) return;
 
         this.#elt = this.#build();
     }
 
     #build() {
-        const pixie = document.createElement('div');
-        pixie.id = 'pixie';
+        const pixie = document.createElement("div");
+        pixie.id = "pixie";
 
         return pixie;
     }
@@ -25,17 +25,17 @@ export default class Pixie {
     }
 
     say(toSay) {
-        this.#elt.innerHTML = '';
+        this.#elt.innerHTML = "";
 
-        const speech = document.createElement('div');
+        const speech = document.createElement("div");
         speech.id = "speech";
 
-        const p = document.createElement('p');
+        const p = document.createElement("p");
         speech.appendChild(p);
 
-        const hint = document.createElement('span');
+        const hint = document.createElement("span");
         hint.classList.add("hint");
-        hint.innerHTML = 'Clique pour continuer';
+        hint.innerHTML = "Clique pour continuer";
         speech.appendChild(hint);
 
         let i = 0;
@@ -45,32 +45,31 @@ export default class Pixie {
                 i++;
                 setTimeout(typeWriter, this.#textSpeed);
             }
-        }
+        };
         this.#elt.appendChild(speech);
 
         typeWriter(toSay, speech);
     }
 
     mute() {
-        this.#elt.innerHTML = '';
+        this.#elt.innerHTML = "";
     }
 
     #toggleIdleSize() {
         if (this.#isIdle) {
             this.#elt.style.width = `${this.#idleSize}px`;
             this.#elt.style.height = `${this.#idleSize}px`;
-        }
-        else {
+        } else {
             this.#elt.style.width = `${this.#defaultSize}px`;
             this.#elt.style.height = `${this.#defaultSize}px`;
         }
     }
 
-    #updatePosition(x, y, unit = 'px') {
-        if (unit === 'viewport') {
+    #updatePosition(x, y, unit = "px") {
+        if (unit === "viewport") {
             x = (window.innerWidth * x) / 100;
             y = (window.innerHeight * y) / 100;
-            unit = 'px';
+            unit = "px";
         }
 
         this.#elt.style.top = `${y}${unit}`;
@@ -90,7 +89,7 @@ export default class Pixie {
         this.#isIdle = true;
         this.mute();
         this.#toggleIdleSize();
-        this.#updatePosition((window.innerWidth / 2) - (this.#idleSize / 2), 4);
+        this.#updatePosition(window.innerWidth / 2 - this.#idleSize / 2, 4);
     }
 
     hide() {
@@ -102,10 +101,14 @@ export default class Pixie {
     }
 
     async wait() {
-        return new Promise(resolve => {
-            document.addEventListener('click', () => {
-                resolve();
-            }, { once: true });
+        return new Promise((resolve) => {
+            document.addEventListener(
+                "click",
+                () => {
+                    resolve();
+                },
+                { once: true }
+            );
         });
     }
 }
