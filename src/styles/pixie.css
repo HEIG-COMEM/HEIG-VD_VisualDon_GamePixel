@@ -7,3 +7,15 @@
     background-color: var(--gold);
     transition: all .5s ease-in-out;
 }
+
+#speech {
+    width: 20vw;
+    padding: 10px;
+    margin-left: 15px;
+    border: 1px solid var(--gold);
+}
+
+#speech span.hint {
+    color: var(--gold);
+    font-size: 12px;
+}

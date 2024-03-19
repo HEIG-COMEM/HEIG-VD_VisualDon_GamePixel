@@ -1,11 +1,12 @@
 import { displayEvent, isElementInViewport } from './helper.js';
-import Pixie from './modules/Pixie.js';
 import EventManager from './modules/EventManager.js';
 
 import './elements/event-item.js';
 import './elements/game-item.js';
 
+import './pixieScript.js';
 import './modules/timeline.js';
+import './modules/section.js';
 
 new EventManager();
 
@@ -22,8 +23,13 @@ const router = () => {
                 displayEvent(hashs.at(1));
             }
             else {
-                console.log(hash);
+                displayEvent();
             }
+            break;
+
+        case '#start_journey':
+            const next = document.querySelector('#start').nextElementSibling;
+            window.location.hash = `${next.id}`;
             break;
     }
 }
@@ -34,40 +40,40 @@ document.addEventListener('events_ready', () => router()); // Wait for the event
 // DEBUG
 
 // PIXIE TESTS
-const pixie = new Pixie();
+// const pixie = new Pixie();
 
-setTimeout(() => {
-    pixie.render();
+// setTimeout(() => {
+//     pixie.render();
 
-    const h4 = document.querySelector('#start h4').getBoundingClientRect();
+//     const h4 = document.querySelector('#start h4').getBoundingClientRect();
 
-    pixie.move(h4.right + 5, h4.bottom - 16);
-}, 200);
+//     pixie.move(h4.right + 5, h4.bottom - 16);
+// }, 200);
 
-window.addEventListener('resize', () => {
-    const h4 = document.querySelector('#start h4').getBoundingClientRect();
+// window.addEventListener('resize', () => {
+//     const h4 = document.querySelector('#start h4').getBoundingClientRect();
 
-    pixie.move(h4.right + 5, h4.bottom - 16);
-});
+//     pixie.move(h4.right + 5, h4.bottom - 16);
+// });
 
 // SCROLL TESTS
-const main = document.querySelector("main");
+// const main = document.querySelector("main");
 
-main.addEventListener('scroll', () => {
-    const range = 15;
-    if (window.innerHeight - main.scrollTop < range) {
-        // console.log('bottom');
-        const active = document.querySelector("#timeline .active");
-        if (!active) {
-            const first = document.querySelector("#timeline a").getAttribute("href").split("#").at(-1);
-            window.location.hash = `event-${first}`;
-        }
-        pixie.moveToIdle();
-    } else {
-        // console.log('not bottom');
-        pixie.move(0, 0);
-    }
-});
+// main.addEventListener('scroll', () => {
+//     const range = 15;
+//     if (window.innerHeight - main.scrollTop < range) {
+//         // console.log('bottom');
+//         const active = document.querySelector("#timeline .active");
+//         if (!active) {
+//             const first = document.querySelector("#timeline a").getAttribute("href").split("#").at(-1);
+//             window.location.hash = `event-${first}`;
+//         }
+//         pixie.moveToIdle();
+//     } else {
+//         // console.log('not bottom');
+//         pixie.move(0, 0);
+//     }
+// });
 
 const scrollContainer = document.querySelector("#events");
 
@@ -75,35 +81,34 @@ const delay = 0;
 let countPos = 0;
 let countNeg = 0;
 
-scrollContainer.addEventListener("wheel", (e) => {
-    e.preventDefault();
-    const delta = e.deltaY;
-    const active = document.querySelector(".event.active");
-    if (!active) return;
+// scrollContainer.addEventListener("wheel", (e) => {
+//     e.preventDefault();
 
+//     const delta = e.deltaY;
+//     const active = document.querySelector(".event.active");
+//     if (!active) return;
 
-    if (delta > 0) {
-        const next = active.parentElement.nextElementSibling;
-        if (!isElementInViewport(active) && next) {
-            if (countPos < delay) {
-                countPos++;
-                return;
-            }
-            window.location.hash = `event-${next.getAttribute("year")}`;
-            countPos = 0;
-        }
-    } else {
-        const prev = active.parentElement.previousElementSibling;
-        if (!isElementInViewport(active) && prev) {
-            if (countNeg < delay) {
-                countNeg++;
-                return;
-            }
-            window.location.hash = `event-${prev.getAttribute("year")}`;
-            countNeg = 0;
-        }
-    }
+//     if (delta > 0) {
+//         const next = active.parentElement.nextElementSibling;
+//         if (!isElementInViewport(active) && next) {
+//             if (countPos < delay) {
+//                 countPos++;
+//                 return;
+//             }
+//             window.location.hash = `event-${next.getAttribute("year")}`;
+//             countPos = 0;
+//         }
+//     } else {
+//         const prev = active.parentElement.previousElementSibling;
+//         if (!isElementInViewport(active) && prev) {
+//             if (countNeg < delay) {
+//                 countNeg++;
+//                 return;
+//             }
+//             window.location.hash = `event-${prev.getAttribute("year")}`;
+//             countNeg = 0;
+//         }
+//     }
 
-});
-
+// });
 // DEBUG END

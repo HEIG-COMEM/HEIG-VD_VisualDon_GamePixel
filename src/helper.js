@@ -2,7 +2,14 @@ const displaySection = (id) => {
 
 }
 
-const displayEvent = (year) => {
+const displayEvent = (year = null) => {
+
+    if (!year) {
+        const first = document.querySelector("#timeline a").getAttribute("href").split("#").at(-1);
+        window.location.hash = `event-${first}`;
+        return;
+    }
+
     const oldSection = document.querySelector('#infos-display .event.active');
     const newSection = document.querySelector(`#infos-display .event#event-${year}`);
 

@@ -35,17 +35,16 @@
     /* scroll-snap-type: x mandatory; */
 }
 
+event-item {
+    scroll-snap-align: start;
+    /* scroll-snap-stop: normal; */
+}
+
 #infos-display .event {
-    /* display: none; */
     opacity: .2;
     height: auto;
 
     padding: 0rem 4rem;
-
-    /* TODO: Fix */
-    scroll-snap-align: center;
-    scroll-snap-stop: normal;
-
     transition: all 0.3s ease-in-out;
 }
 
