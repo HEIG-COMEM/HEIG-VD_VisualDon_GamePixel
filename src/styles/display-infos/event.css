@@ -1,84 +1,84 @@
 #events-carousel {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	gap: 10em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10em;
 }
 
 /* select only the first and last div */
 #events-carousel > div:first-child,
 #events-carousel > div:last-child {
-	border-radius: 50%;
-	border: 0.3rem solid var(--gold);
-	cursor: pointer;
-	user-select: none;
+    border-radius: 50%;
+    border: 0.3rem solid var(--gold);
+    cursor: pointer;
+    user-select: none;
 }
 
 #events-carousel > div:first-child span,
 #events-carousel > div:last-child span {
-	color: var(--gold);
-	font-size: 3.5rem;
+    color: var(--gold);
+    font-size: 3.5rem;
 }
 
 #events {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	gap: 10em;
-	width: 70vw;
-	overflow-x: scroll;
-	overflow-y: hidden;
-	scrollbar-width: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10em;
+    width: 70vw;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    scrollbar-width: none;
 }
 
 #infos-display .event {
-	opacity: 0.2;
-	height: auto;
+    opacity: 0.2;
+    height: auto;
 
-	padding: 0rem 4rem;
-	transition: all 0.3s ease-in-out;
+    padding: 0rem 4rem;
+    transition: all 0.3s ease-in-out;
 }
 
 #infos-display .event.active {
-	opacity: 1;
+    opacity: 1;
 }
 
 .event h2 {
-	font-size: 4rem;
-	font-style: normal;
-	font-weight: 900;
-	margin-bottom: 0;
+    font-size: 4rem;
+    font-style: normal;
+    font-weight: 900;
+    margin-bottom: 0;
 }
 
 .event h3 {
-	font-size: 3.5625rem;
-	font-style: normal;
-	font-weight: 900;
-	margin-bottom: 0;
+    font-size: 3.5625rem;
+    font-style: normal;
+    font-weight: 900;
+    margin-bottom: 0;
 }
 
 .event h4 {
-	margin: 0;
-	font-size: 2rem;
-	font-style: normal;
-	font-weight: 900;
+    margin: 0;
+    font-size: 2rem;
+    font-style: normal;
+    font-weight: 900;
 }
 
 .event p {
-	font-size: 1.5rem;
-	font-style: normal;
+    font-size: 1.5rem;
+    font-style: normal;
 }
 
 .event .graphs {
-	display: flex;
-	flex-direction: row;
-	gap: 2em;
-	margin-top: 7rem;
+    display: flex;
+    flex-direction: row;
+    gap: 2em;
+    margin-top: 7rem;
 }
 
 .event .graphs div {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 1em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
 }

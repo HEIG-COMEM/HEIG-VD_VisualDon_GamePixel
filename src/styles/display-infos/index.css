@@ -1,12 +1,12 @@
-@import "./timeline.css";
-@import "./event.css";
-@import "./games.css";
+@import './timeline.css';
+@import './event.css';
+@import './games.css';
 
 #infos-display {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 1em;
-	padding: 1rem;
-	margin: 10rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+    padding: 1rem;
+    margin: 10rem 0;
 }

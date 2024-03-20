@@ -1,11 +1,11 @@
-import { isElementInViewport } from "../helper.js";
+import { isElementInViewport } from '../helper.js'
 
-const sectionVisible = new CustomEvent("section_visible");
+const sectionVisible = new CustomEvent('section_visible')
 
-document.querySelectorAll("section").forEach((section) => {
-    document.querySelector("main").addEventListener("scroll", () => {
-        if (!isElementInViewport(section)) return;
+document.querySelectorAll('section').forEach((section) => {
+    document.querySelector('main').addEventListener('scroll', () => {
+        if (!isElementInViewport(section)) return
 
-        section.dispatchEvent(sectionVisible);
-    });
-});
+        section.dispatchEvent(sectionVisible)
+    })
+})

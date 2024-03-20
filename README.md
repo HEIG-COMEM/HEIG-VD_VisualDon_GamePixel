@@ -35,25 +35,25 @@ Pour ce faire nous avons besoin de créer notre propore fichier de données qui 
 
 ```json
 {
-  "events": [
-    {
-      "name": "nom de l'événement",
-      "date": "date de l'événement",
-      "description": "description de l'événement",
-      "games": [
+    "events": [
         {
-          "name": "nom du jeu",
-          "date": "date de sortie du jeu",
-          "description": "description du jeu",
-          "poster": "lien vers l'image du jeu",
-          "rating": "note moyenne du jeu",
-          "plays": "nombre total de joueurs",
-          "genres": ["genre 1", "genre 2", "..."],
-          "platforms": ["plateforme 1", "plateforme 2", "..."]
+            "name": "nom de l'événement",
+            "date": "date de l'événement",
+            "description": "description de l'événement",
+            "games": [
+                {
+                    "name": "nom du jeu",
+                    "date": "date de sortie du jeu",
+                    "description": "description du jeu",
+                    "poster": "lien vers l'image du jeu",
+                    "rating": "note moyenne du jeu",
+                    "plays": "nombre total de joueurs",
+                    "genres": ["genre 1", "genre 2", "..."],
+                    "platforms": ["plateforme 1", "plateforme 2", "..."]
+                }
+            ]
         }
-      ]
-    }
-  ]
+    ]
 }
 ```
 
@@ -69,5 +69,5 @@ Pour visualiser les wireframes de notre application GamePixel, veuillez consulte
 
 ## 📚 Références
 
-- Pour réaliser ce projet, nous avons utilisé les données provenant de [Kaggle](https://www.kaggle.com/datasets/gsimonx37/backloggd)
-- Ces données ont également été utilisées à des fins de statistiques sur le répertoire [GitHub](https://github.com/GSimonX37/Backloggd)
+-   Pour réaliser ce projet, nous avons utilisé les données provenant de [Kaggle](https://www.kaggle.com/datasets/gsimonx37/backloggd)
+-   Ces données ont également été utilisées à des fins de statistiques sur le répertoire [GitHub](https://github.com/GSimonX37/Backloggd)

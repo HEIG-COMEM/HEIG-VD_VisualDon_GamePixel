@@ -1,37 +1,37 @@
 * {
-	scrollbar-width: none;
+    scrollbar-width: none;
 }
 body {
-	background-color: var(--dark);
-	margin: 0;
+    background-color: var(--dark);
+    margin: 0;
 }
 
 main {
-	scroll-snap-type: y mandatory;
-	scroll-behavior: smooth;
-	overflow-y: scroll;
-	overflow-x: hidden;
-	height: 100vh;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 100vh;
 }
 
 section {
-	margin: 0;
-	padding: 0;
-	display: flex;
-	height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100vh;
 
-	scroll-snap-align: start;
-	scroll-snap-stop: always;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
 }
 
 section#start {
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .divider {
-	width: 4rem;
-	height: 2px;
-	background-color: var(--gold);
+    width: 4rem;
+    height: 2px;
+    background-color: var(--gold);
 }

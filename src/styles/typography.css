@@ -1,54 +1,54 @@
 * {
-	font-family: var(--font-family);
-	font-size: 14px;
-	color: var(--white);
-	font-optical-sizing: auto;
-	font-weight: 400;
-	font-style: normal;
-	line-height: 1.5;
+    font-family: var(--font-family);
+    font-size: 14px;
+    color: var(--white);
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1.5;
 }
 
 h1 {
-	font-size: 4rem;
-	font-weight: 800;
+    font-size: 4rem;
+    font-weight: 800;
 }
 
 h1.hero {
-	font-size: 4.5rem;
+    font-size: 4.5rem;
 }
 
 @media (max-width: 768px) {
-	h1.hero {
-		font-size: 3.5rem;
-	}
+    h1.hero {
+        font-size: 3.5rem;
+    }
 }
 
 h2 {
-	font-size: 3.5rem;
-	font-weight: 600;
-	color: #fff;
+    font-size: 3.5rem;
+    font-weight: 600;
+    color: #fff;
 }
 
 h3 {
-	font-size: 3rem;
-	font-weight: 600;
+    font-size: 3rem;
+    font-weight: 600;
 }
 
 h4 {
-	font-size: 2.5rem;
-	font-weight: 600;
+    font-size: 2.5rem;
+    font-weight: 600;
 }
 
 h5 {
-	font-size: 2rem;
-	font-weight: 600;
+    font-size: 2rem;
+    font-weight: 600;
 }
 
 h6 {
-	font-size: 1.5rem;
-	font-weight: 600;
+    font-size: 1.5rem;
+    font-weight: 600;
 }
 
 .material-icons {
-	vertical-align: middle;
+    vertical-align: middle;
 }

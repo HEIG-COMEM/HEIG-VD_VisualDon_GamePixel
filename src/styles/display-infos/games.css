@@ -1,111 +1,113 @@
 .games {
-	display: flex;
-	flex-wrap: nowrap;
-	justify-content: center;
-	gap: 1rem;
-	margin-top: 1rem;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
 }
 
 .game-item {
-	display: flex;
-	flex-direction: column-reverse;
-	border-radius: 1.125rem;
-	background: linear-gradient(180deg, rgba(32, 32, 32, 0) 0%, #202020 94.1%),
-		var(--background-image) lightgray 50% / cover no-repeat;
-	display: flex;
-	min-height: 10rem;
-	width: 20vw;
-	cursor: pointer;
+    display: flex;
+    flex-direction: column-reverse;
+    border-radius: 1.125rem;
+    background:
+        linear-gradient(180deg, rgba(32, 32, 32, 0) 0%, #202020 94.1%),
+        var(--background-image) lightgray 50% / cover no-repeat;
+    display: flex;
+    min-height: 10rem;
+    width: 20vw;
+    cursor: pointer;
 
-	transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
 }
 
 .game-item:hover {
-	transform: scale(1.1);
+    transform: scale(1.1);
 }
 
 .games:hover .game-item:not(:hover) {
-	opacity: 0.1;
+    opacity: 0.1;
 }
 
 .game-item span {
-	font-size: 1.25rem;
-	font-weight: 900;
-	margin-left: 1rem;
+    font-size: 1.25rem;
+    font-weight: 900;
+    margin-left: 1rem;
 }
 
 #game-cards {
-	display: none;
+    display: none;
 }
 
 #game-cards:has(.active) {
-	position: absolute;
-	display: flex;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
+    position: absolute;
+    display: flex;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 
-	width: 100vw;
-	height: 100vh;
-	justify-content: center;
-	align-items: center;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
 
-	background-color: var(--dark-opacity);
-	z-index: 100;
+    background-color: var(--dark-opacity);
+    z-index: 100;
 }
 
 game-card {
-	position: absolute;
-	width: 40vw;
-	height: 70vh;
+    position: absolute;
+    width: 40vw;
+    height: 70vh;
 }
 
 .game-card {
-	border-radius: 1.125rem;
-	background: linear-gradient(180deg, #20202000 0%, #202020 100%), var(--background-image);
-	background-size: cover;
-	background-repeat: no-repeat;
-	position: absolute;
-	display: none;
+    border-radius: 1.125rem;
+    background: linear-gradient(180deg, #20202000 0%, #202020 100%),
+        var(--background-image);
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: absolute;
+    display: none;
 
-	width: 40vw;
-	height: 70vh;
-	flex-direction: column;
-	justify-content: end;
-	padding: 1rem;
+    width: 40vw;
+    height: 70vh;
+    flex-direction: column;
+    justify-content: end;
+    padding: 1rem;
 
-	z-index: 1;
+    z-index: 1;
 }
 
 .game-card.active {
-	display: flex;
-	z-index: 101;
+    display: flex;
+    z-index: 101;
 }
 
 .genres {
-	display: flex;
-	flex-direction: row;
+    display: flex;
+    flex-direction: row;
 
-	gap: 1rem;
+    gap: 1rem;
 }
 
 .genres span {
-	border-color: var(--white);
-	border-radius: 50px;
-	border-style: solid;
-	padding: 4px 10px;
+    border-color: var(--white);
+    border-radius: 50px;
+    border-style: solid;
+    padding: 4px 10px;
 
-	font-weight: 700;
+    font-weight: 700;
 }
 
 .game-card .title {
-	margin-top: 4px;
-	font-size: 2.5rem;
-	font-weight: 900;
+    margin-top: 4px;
+    font-size: 2.5rem;
+    font-weight: 900;
 }
 
 .game-card p {
-	font-size: 1.1rem;
-	font-weight: 500;
-	margin-top: 8px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-top: 8px;
 }

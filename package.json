@@ -1,27 +1,36 @@
 {
-  "name": "gamepixel",
-  "version": "1.0.0",
-  "description": "Visualisation des données de l'histoire graphique des jeux vidéo",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "author": "Jérémie Zurflüh, Antoine Uldry, Luca Correia Da Rocha",
-  "license": "ISC",
-  "devDependencies": {
-    "@rollup/plugin-dsv": "^3.0.4",
-    "vite": "^5.0.12"
-  },
-  "dependencies": {
-    "d3-array": "^3.2.4",
-    "d3-axis": "^3.0.0",
-    "d3-ease": "^3.0.1",
-    "d3-fetch": "^3.0.1",
-    "d3-geo": "^3.1.0",
-    "d3-scale": "^4.0.2",
-    "d3-selection": "^3.0.0",
-    "d3-transition": "^3.0.1"
-  }
+    "name": "gamepixel",
+    "version": "1.0.0",
+    "description": "Visualisation des données de l'histoire graphique des jeux vidéo",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "preview": "vite preview",
+        "format": "npx prettier --write ."
+    },
+    "author": "Jérémie Zurflüh, Antoine Uldry, Luca Correia Da Rocha",
+    "license": "ISC",
+    "husky": {
+        "hooks": {
+            "pre-commit": "pretty-quick --staged"
+        }
+    },
+    "devDependencies": {
+        "@rollup/plugin-dsv": "^3.0.4",
+        "husky": "^9.0.11",
+        "prettier": "^3.2.5",
+        "pretty-quick": "^4.0.0",
+        "vite": "^5.0.12"
+    },
+    "dependencies": {
+        "d3-array": "^3.2.4",
+        "d3-axis": "^3.0.0",
+        "d3-ease": "^3.0.1",
+        "d3-fetch": "^3.0.1",
+        "d3-geo": "^3.1.0",
+        "d3-scale": "^4.0.2",
+        "d3-selection": "^3.0.0",
+        "d3-transition": "^3.0.1"
+    }
 }
