@@ -7,15 +7,12 @@
         "dev": "vite",
         "build": "vite build",
         "preview": "vite preview",
-        "format": "npx prettier --write ."
+        "format": "prettier --write .",
+        "lint": "prettier --check .",
+        "prepare": "husky"
     },
     "author": "Jérémie Zurflüh, Antoine Uldry, Luca Correia Da Rocha",
     "license": "ISC",
-    "husky": {
-        "hooks": {
-            "pre-commit": "echo \"[Husky] pre-commit \""
-        }
-    },
     "devDependencies": {
         "@rollup/plugin-dsv": "^3.0.4",
         "husky": "^9.0.11",
