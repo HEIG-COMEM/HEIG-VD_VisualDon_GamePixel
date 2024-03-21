@@ -61,6 +61,6 @@ events.addEventListener('wheel', function (e) {
         next.scrollIntoView({ behavior: 'smooth' })
     } else if (delta < 0 && prev) {
         window.location.hash = `event-${prev.getAttribute('year')}`
-prev.scrollIntoView({ behavior: 'smooth' })
+        prev.scrollIntoView({ behavior: 'smooth' })
     }
 })
