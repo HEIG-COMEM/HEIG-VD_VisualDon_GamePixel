@@ -60,7 +60,9 @@ const hideCard = () => {
 }
 
 const stopLoading = () => {
-    document.querySelector('#loading').remove()
+    setTimeout(() => {
+        document.querySelector('#loading').classList.add('fade-out')
+    }, 2000)
 }
 
 export {

@@ -38,6 +38,10 @@
     animation: jump 5s linear infinite;
 }
 
+.fade-out {
+    animation: fade 1s ease-out forwards;
+}
+
 @keyframes animate {
     0% {
         transform: translateX(0);
@@ -89,5 +93,18 @@
     }
     100% {
         transform: translateY(0);
+    }
+}
+
+@keyframes fade {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(-100%);
     }
 }
