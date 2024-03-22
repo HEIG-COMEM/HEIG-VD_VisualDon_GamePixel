@@ -1,3 +1,7 @@
+import { scrollToEvent, moveTimeline } from './modules/timeline.js'
+
+let inInfos = false
+
 const displayEvent = (year = null) => {
     if (!year) {
         const first = document
@@ -20,13 +24,23 @@ const displayEvent = (year = null) => {
     const timeline = document.querySelector('#timeline')
     timeline.querySelector('.active')?.classList.remove('active')
     timeline.querySelector(`[href="#${year}"]`).classList.add('active')
-}
 
-const scrollToEvent = (year) => {
-    const event = document.querySelector(
-        `event-item div[data-id="event-${year}"]`
-    )
-    event?.scrollIntoView({ behavior: 'smooth' })
+    document
+        .querySelector('#infos-display')
+        .addEventListener('element_in_viewport', () => {
+            inInfos = true
+            moveTimeline(timeline.querySelector(`.active`))
+            moveTimeline(timeline.querySelector(`.active`))
+            scrollToEvent(year)
+        })
+
+    if (inInfos) {
+        // moveTimeline(timeline.querySelector(`.active`))
+        setTimeout(() => {
+            moveTimeline(timeline.querySelector(`.active`))
+        }, 100)
+        scrollToEvent(year)
+    }
 }
 
 const eltInViewPort = new CustomEvent('element_in_viewport')
@@ -59,4 +73,4 @@ const hideCard = () => {
     document.querySelector('#game-cards .active')?.classList.remove('active')
 }
 
-export { displayEvent, isElementInViewport, scrollToEvent, showCard, hideCard }
+export { displayEvent, isElementInViewport, showCard, hideCard }
