@@ -29,16 +29,23 @@ const scrollToEvent = (year) => {
     event?.scrollIntoView({ behavior: 'smooth' })
 }
 
+const eltInViewPort = new CustomEvent('element_in_viewport')
+
 const isElementInViewport = (el) => {
-    const rect = el.getBoundingClientRect()
-    return (
-        rect.top >= 0 &&
-        rect.left >= 0 &&
-        rect.bottom - 1 <=
-            (window.innerHeight || document.documentElement.clientHeight) &&
-        rect.right <=
-            (window.innerWidth || document.documentElement.clientWidth)
+    const observer = new IntersectionObserver(
+        ([entry]) => {
+            if (entry.isIntersecting) {
+                el.dispatchEvent(eltInViewPort)
+            }
+        },
+        {
+            root: document.querySelector('main'),
+            rootMargin: '0px',
+            threshold: 0.5,
+        }
     )
+
+    observer.observe(el)
 }
 
 const showCard = (name) => {
@@ -52,4 +59,15 @@ const hideCard = () => {
     document.querySelector('#game-cards .active')?.classList.remove('active')
 }
 
-export { displayEvent, isElementInViewport, scrollToEvent, showCard, hideCard }
+const stopLoading = () => {
+    document.querySelector('#loading').remove()
+}
+
+export {
+    displayEvent,
+    isElementInViewport,
+    scrollToEvent,
+    showCard,
+    hideCard,
+    stopLoading,
+}

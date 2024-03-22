@@ -1,4 +1,4 @@
-import { displayEvent, showCard, hideCard } from './helper.js'
+import { displayEvent, showCard, hideCard, stopLoading } from './helper.js'
 import EventManager from './modules/EventManager.js'
 import { loadData } from './modules/graphics.js'
 
@@ -40,6 +40,8 @@ const router = () => {
 
 window.addEventListener('hashchange', router)
 document.addEventListener('events_ready', router) // Wait for the events to be ready before routing
+
+document.addEventListener('dataReady', stopLoading, { once: true })
 
 document.querySelector('#game-cards').addEventListener('click', (e) => {
     if (e.target.id !== 'game-cards') return
