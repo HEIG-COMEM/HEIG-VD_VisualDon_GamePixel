@@ -59,4 +59,15 @@ const hideCard = () => {
     document.querySelector('#game-cards .active')?.classList.remove('active')
 }
 
-export { displayEvent, isElementInViewport, scrollToEvent, showCard, hideCard }
+const stopLoading = () => {
+    document.querySelector('#loading').remove()
+}
+
+export {
+    displayEvent,
+    isElementInViewport,
+    scrollToEvent,
+    showCard,
+    hideCard,
+    stopLoading,
+}

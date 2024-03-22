@@ -3,6 +3,7 @@
 
 @import 'typography.css';
 @import 'structure.css';
+@import 'loading-screen/index.css';
 @import 'display-infos/index.css';
 
 @import 'pixie.css';
