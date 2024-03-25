@@ -38,8 +38,8 @@ const displayEvent = (year = null) => {
         // moveTimeline(timeline.querySelector(`.active`))
         setTimeout(() => {
             moveTimeline(timeline.querySelector(`.active`))
+            scrollToEvent(year)
         }, 100)
-        scrollToEvent(year)
     }
 }
 

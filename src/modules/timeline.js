@@ -62,7 +62,7 @@ const scrollToEvent = (year) => {
     const event = document.querySelector(
         `event-item div[data-id="event-${year}"]`
     ).parentElement
-    event?.scrollIntoView()
+    event?.scrollIntoView({ behavior: 'smooth' })
 }
 
 const moveTimeline = (year) => {
