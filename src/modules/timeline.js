@@ -1,5 +1,3 @@
-import { scrollToEvent } from '../helper'
-
 const timeline = document.querySelector('#timeline')
 const events = document.querySelector('#events')
 
@@ -9,7 +7,6 @@ timeline.addEventListener('click', (e) => {
     if (e.target === timeline) return
     const year = e.target.href.split('#').at(-1)
     window.location.hash = `event-${year}`
-    scrollToEvent(year)
 })
 
 // Carousel arrows
@@ -41,8 +38,6 @@ document.querySelector('#events-carousel').addEventListener('click', (e) => {
             next()
             break
     }
-    const eventYear = window.location.hash.split('-').at(-1)
-    scrollToEvent(eventYear)
 })
 
 // User scroll
@@ -53,14 +48,56 @@ events.addEventListener('wheel', function (e) {
     if (!active) return
 
     const delta = e.deltaY
-    const next = active.parentElement.nextElementSibling
-    const prev = active.parentElement.previousElementSibling
+    const nextA = active.parentElement.nextElementSibling
+    const prevA = active.parentElement.previousElementSibling
 
-    if (delta > 0 && next) {
-        window.location.hash = `event-${next.getAttribute('year')}`
-        next.scrollIntoView({ behavior: 'smooth' })
-    } else if (delta < 0 && prev) {
-        window.location.hash = `event-${prev.getAttribute('year')}`
-        prev.scrollIntoView({ behavior: 'smooth' })
+    if (delta > 0 && nextA) {
+        next()
+        return
+    } else if (delta < 0 && prevA) {
+        prev()
+        return
     }
 })
+
+const scrollToEvent = (year) => {
+    const event = document.querySelector(
+        `event-item div[data-id="event-${year}"]`
+    ).parentElement
+    const events = document.querySelector('#events')
+    // event?.scrollIntoView({ behavior: 'smooth' })
+
+    // make the event visible in the viewport with a trasnlate in the horizontal axis
+    const eventRect = event.getBoundingClientRect()
+    const eventsRect = events.getBoundingClientRect()
+    const scrollLeft = events.scrollLeft
+    const eventLeft = eventRect.left - eventsRect.left + scrollLeft
+    const eventWidth = eventRect.width
+    const eventsWidth = eventsRect.width
+    const eventCenter = eventLeft + eventWidth / 2
+    const eventsCenter = eventsWidth / 2
+    const translate = eventCenter - eventsCenter
+    events.scrollTo({
+        left: translate,
+        behavior: 'smooth',
+    })
+}
+
+const moveTimeline = (year) => {
+    const timelineWidth = timeline.offsetWidth
+    const timelineCenter = timelineWidth / 2
+
+    const activeYearWidth = year.offsetWidth
+    const activeYearOffset = year.offsetLeft
+    const activeYearCenter = activeYearWidth / 2
+    const translate = timelineCenter - activeYearOffset - activeYearCenter
+    timeline.style.transform = `translateX(${translate}px)`
+    // make the behavior smooth
+    timeline.style.transition = 'transform 0.5s'
+    // reset the transform property
+    setTimeout(() => {
+        timeline.style.transition = ''
+    }, 500)
+}
+
+export { scrollToEvent, moveTimeline }

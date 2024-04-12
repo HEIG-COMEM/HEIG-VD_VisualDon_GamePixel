@@ -17,6 +17,7 @@ const router = () => {
 
     switch (hashs.at(0)) {
         case '#start':
+            displayEvent()
             break
 
         case '#event':
