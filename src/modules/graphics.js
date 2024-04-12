@@ -1,5 +1,4 @@
 import { csv } from 'd3-fetch'
-import { select } from 'd3-selection'
 import moment from 'moment'
 import { generateBarGraph } from '../helper.js'
 
@@ -11,9 +10,12 @@ async function loadData() {
     return data
 }
 
+const DATA = loadData()
+
 async function parseData(year) {
+    console.log('Parsing data for year:', year)
     year = moment(year).format('YYYY')
-    const data = await loadData()
+    const data = await DATA
     const games = data
         .filter((d) => moment(d.date).format('YYYY') === year)
         .map((d) => {
@@ -55,34 +57,36 @@ async function parseData(year) {
         .sort((a, b) => b[1] - a[1])
         .slice(0, 10)
 
+    sessionStorage.setItem(
+        `GamePixel-${year}`,
+        JSON.stringify({ sortedPlatforms, sortedGenres })
+    )
+
     return { sortedPlatforms, sortedGenres }
 }
 
 async function renderGraphics(yearNumber) {
     const year = yearNumber.toString()
-    const data = await parseData(year)
+    const data = sessionStorage.getItem(`GamePixel-${year}`)
+        ? JSON.parse(sessionStorage.getItem(`GamePixel-${year}`))
+        : await parseData(year)
 
     const genreTarget = `div[data-id="event-${year}"] .graph_genre`
     const plateformTarget = `div[data-id="event-${year}"] .graph_plateform`
 
-    if (data.sortedGenres.length)
+    if (data.sortedGenres.length) {
         generateBarGraph(genreTarget, data.sortedGenres)
-    if (data.sortedPlatforms.length)
+    } else {
+        document.querySelector(genreTarget).innerHTML =
+            '<p class="small no-data">No data available for this year</p>'
+    }
+
+    if (data.sortedPlatforms.length) {
         generateBarGraph(plateformTarget, data.sortedPlatforms)
-
-    console.log(year, data.sortedGenres, data.sortedPlatforms)
-
-    // create a bar chart for the platforms using d3
-    // select('div[data-id="event-1958"]')
-    //     .append('div')
-    //     .attr('id', 'platform-chart')
-    //     .selectAll('div')
-    //     .data(sortedGenres)
-    //     .enter()
-    //     .append('div')
-    //     .style('width', (d) => `${d[1] * 2}px`) // Increase the scale to make it more visible
-    //     .style('background-color', 'teal')
-    //     .text((d) => `${d[0]}: ${d[1]}`)
+    } else {
+        document.querySelector(plateformTarget).innerHTML =
+            '<p class="small no-data">No data available for this year</p>'
+    }
 }
 
 export { loadData, renderGraphics }
