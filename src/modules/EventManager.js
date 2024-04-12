@@ -1,3 +1,4 @@
+import { renderGraphics } from './graphics.js'
 const eventsReady = new CustomEvent('events_ready')
 
 export default class EventManager {
@@ -39,6 +40,7 @@ export default class EventManager {
             document
                 .querySelector('#infos-display #events')
                 .appendChild(eventItem)
+            renderGraphics(event.date)
         })
     }
 
