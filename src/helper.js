@@ -77,7 +77,7 @@ const hideCard = () => {
 }
 
 const generateBarGraph = (target, data) => {
-    console.log(data)
+    // console.log(data)
 
     // set the dimensions and margins of the graph
     const margin = { top: 20, right: 30, bottom: 40, left: 90 },
