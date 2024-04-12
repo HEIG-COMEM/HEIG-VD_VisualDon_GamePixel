@@ -18,8 +18,8 @@ class EventItem extends HTMLElement {
                                 ${gamesHTML}
                             </div>
                             <div class="graphs">
-                                <div class="graph_genre"></div>
-                                <div class="graph_plateform"></div>
+                                <div class="graph_genre"><h4>Genres</h4></div>
+                                <div class="graph_plateform"><h4>Plateforme</h4></div>
                             </div>
                         </div>
         `

@@ -93,11 +93,7 @@ const moveTimeline = (year) => {
     const translate = timelineCenter - activeYearOffset - activeYearCenter
     timeline.style.transform = `translateX(${translate}px)`
     // make the behavior smooth
-    timeline.style.transition = 'transform 0.5s'
-    // reset the transform property
-    setTimeout(() => {
-        timeline.style.transition = ''
-    }, 500)
+    timeline.style.transition = 'transform 0.9s'
 }
 
 export { scrollToEvent, moveTimeline }
