@@ -1,6 +1,10 @@
 import { csv } from 'd3-fetch'
 import moment from 'moment'
-import { generateBarGraph } from '../helper.js'
+import { select } from 'd3-selection'
+import { easeElasticOut } from 'd3-ease'
+import { scaleLinear, scaleBand } from 'd3-scale'
+import { axisLeft, axisBottom } from 'd3-axis'
+import { transition } from 'd3-transition'
 
 const dataReady = new CustomEvent('dataReady')
 
@@ -89,4 +93,80 @@ async function renderGraphics(yearNumber) {
     }
 }
 
-export { loadData, renderGraphics }
+function generateBarGraph(target, data) {
+    // console.log(data)
+
+    // set the dimensions and margins of the graph
+    const margin = { top: 20, right: 30, bottom: 40, left: 150 },
+        width = 500 - margin.left - margin.right,
+        height = 200 - margin.top - margin.bottom
+
+    // append the svg object to the body of the page
+    const svg = select(target)
+        .append('svg')
+        .attr('width', width + margin.left + margin.right)
+        .attr('height', height + margin.top + margin.bottom)
+        .append('g')
+        .attr('transform', `translate(${margin.left}, ${margin.top})`)
+
+    // Parse the Data
+
+    const x = scaleLinear().domain([0, data[0][1]]).range([0, width])
+
+    svg.append('g')
+        .attr('transform', `translate(0, ${height})`)
+        .call(axisBottom(x))
+        .selectAll('text')
+        .attr('transform', 'translate(-10,0)rotate(-45)')
+        .style('text-anchor', 'end')
+
+    // Y axis
+    const y = scaleBand()
+        .range([0, height])
+        .domain(data.map((d) => d[0]))
+        .padding(0.1)
+    svg.append('g').call(axisLeft(y))
+
+    //Bars
+    svg.selectAll('myRect')
+        .data(data)
+        .join('rect')
+        .attr('x', x(0))
+        .attr('y', (d) => y(d[0]))
+        .attr('width', (d) => x(d[1]))
+        .attr('height', y.bandwidth())
+        .attr('fill', '#be865b')
+}
+
+function animateGraphic(target, data) {
+    if (!data.length) return
+
+    const margin = { top: 20, right: 30, bottom: 40, left: 150 },
+        width = 500 - margin.left - margin.right,
+        height = 200 - margin.top - margin.bottom
+
+    const x = scaleLinear().domain([0, data[0][1]]).range([0, width])
+
+    select(target)
+        .selectAll('rect')
+        .attr('width', 0)
+        .transition()
+        .ease(easeElasticOut)
+        .duration(800)
+        .delay((d, i) => i * 150)
+        .attr('width', (d) => x(d[1]))
+}
+
+async function animateGraphics(year) {
+    const data = sessionStorage.getItem(`GamePixel-${year}`)
+        ? JSON.parse(sessionStorage.getItem(`GamePixel-${year}`))
+        : await parseData(year)
+
+    const genreTarget = `div[data-id="event-${year}"] .graph_genre`
+    const plateformTarget = `div[data-id="event-${year}"] .graph_plateform`
+
+    animateGraphic(genreTarget, data.sortedGenres)
+    animateGraphic(plateformTarget, data.sortedPlatforms)
+}
+
+export { loadData, renderGraphics, animateGraphics }

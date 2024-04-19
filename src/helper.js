@@ -1,11 +1,9 @@
 import { scrollToEvent, moveTimeline } from './modules/timeline.js'
-import { select } from 'd3-selection'
-import { scaleLinear, scaleBand } from 'd3-scale'
-import { axisLeft, axisBottom } from 'd3-axis'
+import { animateGraphics } from './modules/graphics.js'
 
 let inInfos = false
 
-const displayEvent = (year = null) => {
+const displayEvent = async (year = null) => {
     if (!year) {
         const first = document
             .querySelector('#timeline a')
@@ -35,6 +33,9 @@ const displayEvent = (year = null) => {
             moveTimeline(timeline.querySelector(`.active`))
             moveTimeline(timeline.querySelector(`.active`))
             scrollToEvent(year)
+            setTimeout(() => {
+                animateGraphics(year)
+            }, 450)
         })
 
     if (inInfos) {
@@ -42,6 +43,9 @@ const displayEvent = (year = null) => {
         setTimeout(() => {
             moveTimeline(timeline.querySelector(`.active`))
             scrollToEvent(year)
+            setTimeout(() => {
+                animateGraphics(year)
+            }, 450)
         }, 100)
     }
 }
@@ -76,54 +80,4 @@ const hideCard = () => {
     document.querySelector('#game-cards .active')?.classList.remove('active')
 }
 
-const generateBarGraph = (target, data) => {
-    // console.log(data)
-
-    // set the dimensions and margins of the graph
-    const margin = { top: 20, right: 30, bottom: 40, left: 150 },
-        width = 500 - margin.left - margin.right,
-        height = 200 - margin.top - margin.bottom
-
-    // append the svg object to the body of the page
-    const svg = select(target)
-        .append('svg')
-        .attr('width', width + margin.left + margin.right)
-        .attr('height', height + margin.top + margin.bottom)
-        .append('g')
-        .attr('transform', `translate(${margin.left}, ${margin.top})`)
-
-    // Parse the Data
-
-    const x = scaleLinear().domain([0, data[0][1]]).range([0, width])
-    svg.append('g')
-        .attr('transform', `translate(0, ${height})`)
-        .call(axisBottom(x))
-        .selectAll('text')
-        .attr('transform', 'translate(-10,0)rotate(-45)')
-        .style('text-anchor', 'end')
-
-    // Y axis
-    const y = scaleBand()
-        .range([0, height])
-        .domain(data.map((d) => d[0]))
-        .padding(0.1)
-    svg.append('g').call(axisLeft(y))
-
-    //Bars
-    svg.selectAll('myRect')
-        .data(data)
-        .join('rect')
-        .attr('x', x(0))
-        .attr('y', (d) => y(d[0]))
-        .attr('width', (d) => x(d[1]))
-        .attr('height', y.bandwidth())
-        .attr('fill', '#be865b')
-}
-
-export {
-    displayEvent,
-    isElementInViewport,
-    showCard,
-    hideCard,
-    generateBarGraph,
-}
+export { displayEvent, isElementInViewport, showCard, hideCard }
