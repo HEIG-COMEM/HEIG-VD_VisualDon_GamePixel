@@ -136,6 +136,14 @@ function generateBarGraph(target, data) {
         .attr('width', (d) => x(d[1]))
         .attr('height', y.bandwidth())
         .attr('fill', '#be865b')
+
+    // add the unit to the axis x without overlapping
+    select(target)
+        .append('text')
+        .text('Number of games')
+        .style('font-size', '12px')
+        .style('align-self', 'end')
+        .style('margin', '0')
 }
 
 function animateGraphic(target, data) {
