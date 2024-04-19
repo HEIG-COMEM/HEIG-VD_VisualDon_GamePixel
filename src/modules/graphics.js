@@ -128,7 +128,9 @@ function generateBarGraph(target, data) {
     svg.append('g').call(axisLeft(y))
 
     //Bars
-    svg.selectAll('myRect')
+    svg.append('g')
+        .attr('class', 'bar-graph-group')
+        .selectAll('myRect')
         .data(data)
         .join('rect')
         .attr('x', x(0))
@@ -136,6 +138,39 @@ function generateBarGraph(target, data) {
         .attr('width', (d) => x(d[1]))
         .attr('height', y.bandwidth())
         .attr('fill', '#be865b')
+        .attr('class', 'bar')
+        .on('mouseover', function (d) {
+            select(this).attr('fill', '#c4a48b')
+
+            select('body')
+                .append('div')
+                .attr('class', 'tooltip')
+                .style('position', 'fixed')
+                .style('background-color', '#f5f5f5')
+                .style('padding', '10px')
+                .style('height', 'auto')
+                .style('border-radius', '5px')
+                .style('box-shadow', '2px 2px 2px grey')
+                .attr('z-index', '1000')
+                .text(
+                    d.toElement.__data__[0] +
+                        ': ' +
+                        d.toElement.__data__[1] +
+                        ' jeux'
+                )
+                .style('color', '#202020')
+                .style('font-family', 'League Spartan')
+                .style('font-weight', '600')
+        })
+        .on('mouseout', function (d) {
+            select(this).attr('fill', '#be865b')
+            select('.tooltip').remove()
+        })
+        .on('mousemove', function (event) {
+            select('.tooltip')
+                .style('left', 10 + event.clientX + 'px')
+                .style('top', 10 + event.clientY + 'px')
+        })
 
     // add the unit to the axis x without overlapping
     select(target)
