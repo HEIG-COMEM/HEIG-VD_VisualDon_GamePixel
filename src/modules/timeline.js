@@ -40,9 +40,18 @@ document.querySelector('#events-carousel').addEventListener('click', (e) => {
     }
 })
 
+let wait = false
 // User scroll
 events.addEventListener('wheel', function (e) {
     e.preventDefault()
+
+    // Prevent multiple scrolls
+    if (wait) return
+
+    wait = true
+    setTimeout(() => {
+        wait = false
+    }, 500)
 
     const active = document.querySelector('event-item .active')
     if (!active) return
