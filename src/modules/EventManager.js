@@ -31,7 +31,7 @@ export default class EventManager {
             const eventItem = document.createElement('event-item')
 
             eventItem.setAttribute('year', event.date)
-            eventItem.setAttribute('title', event.name)
+            eventItem.setAttribute('event-title', event.name)
             eventItem.setAttribute('description', event.description)
             eventItem.setAttribute('games', JSON.stringify(event.games))
 

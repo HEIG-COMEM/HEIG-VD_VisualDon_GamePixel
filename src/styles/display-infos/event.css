@@ -23,7 +23,7 @@
 #events {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
     gap: 10em;
     width: 70vw;
     overflow-x: scroll;

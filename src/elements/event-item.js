@@ -1,7 +1,7 @@
 class EventItem extends HTMLElement {
     connectedCallback() {
         const year = this.getAttribute('year')
-        const title = this.getAttribute('title')
+        const title = this.getAttribute('event-title')
         const description = this.getAttribute('description')
         const games = JSON.parse(this.getAttribute('games'))
         const gamesHTML = games
