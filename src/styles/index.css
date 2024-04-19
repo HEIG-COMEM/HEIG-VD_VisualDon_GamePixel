@@ -12,11 +12,15 @@
     font-size: 3.5rem;
 }
 
+.copy-right.source {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
 .copy-right.source,
 .copy-right.source a {
     font-size: 1rem !important;
-    margin-right: auto;
-    margin-top: auto;
     color: var(--grey) !important;
 }
 
