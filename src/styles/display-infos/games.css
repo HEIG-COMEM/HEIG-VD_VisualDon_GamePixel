@@ -84,7 +84,8 @@ game-card {
     z-index: 101;
 }
 
-.genres {
+.genres,
+.platforms {
     display: flex;
     flex-direction: row;
 
@@ -92,6 +93,7 @@ game-card {
 }
 
 .genres span,
+.platforms span,
 .tag {
     border-color: var(--white);
     border-radius: 50px;
@@ -128,6 +130,12 @@ game-item .tags div {
     margin-top: 4px;
     font-size: 2.5rem;
     font-weight: 900;
+}
+
+.game-card .tags {
+    display: flex;
+    justify-content: space-between;
+    margin: 0.5rem;
 }
 
 .game-card p {
