@@ -140,7 +140,7 @@ function generateBarGraph(target, data) {
     // add the unit to the axis x without overlapping
     select(target)
         .append('text')
-        .text('Number of games')
+        .text('Nombre de jeux')
         .style('font-size', '12px')
         .style('align-self', 'end')
         .style('margin', '0')

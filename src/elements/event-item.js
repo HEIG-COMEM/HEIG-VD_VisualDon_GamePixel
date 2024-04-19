@@ -19,7 +19,7 @@ class EventItem extends HTMLElement {
                             </div>
                             <div class="graphs">
                                 <div class="graph_genre"><h4>Genres</h4></div>
-                                <div class="graph_plateform"><h4>Plateforme</h4></div>
+                                <div class="graph_plateform"><h4>Plateformes</h4></div>
                             </div>
                         </div>
         `
