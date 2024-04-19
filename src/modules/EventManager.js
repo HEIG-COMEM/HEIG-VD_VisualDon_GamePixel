@@ -61,6 +61,7 @@ export default class EventManager {
             gameCard.setAttribute('title', card.name)
             gameCard.setAttribute('image', card.poster)
             gameCard.setAttribute('genres', JSON.stringify(card.genres))
+            gameCard.setAttribute('platforms', JSON.stringify(card.platforms))
             gameCard.setAttribute('descr', card.description)
             document
                 .querySelector('#infos-display #game-cards')

@@ -29,7 +29,7 @@
     opacity: 0.1;
 }
 
-.game-item span {
+.game-item .title {
     font-size: 1.25rem;
     font-weight: 900;
     margin-left: 1rem;
@@ -84,14 +84,17 @@ game-card {
     z-index: 101;
 }
 
-.genres {
+.genres,
+.platforms {
     display: flex;
     flex-direction: row;
 
     gap: 1rem;
 }
 
-.genres span {
+.genres span,
+.platforms span,
+.tag {
     border-color: var(--white);
     border-radius: 50px;
     border-style: solid;
@@ -100,10 +103,39 @@ game-card {
     font-weight: 700;
 }
 
+.tag {
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    border-width: 0.5px;
+}
+
+.tag + span:not(.tag) {
+    font-size: 1rem !important;
+    color: var(--grey);
+}
+
+game-item .tags {
+    display: flex;
+    justify-content: space-between;
+    margin: 0.5rem;
+}
+
+game-item .tags div {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-end;
+}
+
 .game-card .title {
     margin-top: 4px;
     font-size: 2.5rem;
     font-weight: 900;
+}
+
+.game-card .tags {
+    display: flex;
+    justify-content: space-between;
+    margin: 0.5rem;
 }
 
 .game-card p {
