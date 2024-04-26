@@ -46,7 +46,7 @@ const displayEvent = async (year = null) => {
             setTimeout(() => {
                 animateGraphics(year)
             }, 450)
-        }, 100)
+        }, 200)
     }
 }
 
