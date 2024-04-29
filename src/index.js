@@ -1,6 +1,6 @@
 import { displayEvent, showCard, hideCard } from './helper.js'
 import EventManager from './modules/EventManager.js'
-import { loadData } from './modules/graphics.js'
+import { generateStreamChart, loadData } from './modules/graphics.js'
 
 import './elements/event-item.js'
 import './elements/game-item.js'
@@ -48,3 +48,5 @@ document.querySelector('#game-cards').addEventListener('click', (e) => {
     window.history.back()
 })
 window.addEventListener('popstate', hideCard)
+
+generateStreamChart('streamgraph')

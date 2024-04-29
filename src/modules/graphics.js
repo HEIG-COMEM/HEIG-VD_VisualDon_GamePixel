@@ -1,10 +1,13 @@
 import { csv } from 'd3-fetch'
 import moment from 'moment'
-import { select } from 'd3-selection'
+import { select, selectAll } from 'd3-selection'
 import { easeElasticOut } from 'd3-ease'
-import { scaleLinear, scaleBand } from 'd3-scale'
+import { scaleLinear, scaleBand, scaleOrdinal } from 'd3-scale'
 import { axisLeft, axisBottom } from 'd3-axis'
 import { transition } from 'd3-transition'
+import { extent } from 'd3-array'
+import { area, stackOffsetSilhouette, stack } from 'd3-shape'
+import { schemeDark2 } from 'd3-scale-chromatic'
 
 const dataReady = new CustomEvent('dataReady')
 
@@ -212,4 +215,335 @@ async function animateGraphics(year) {
     animateGraphic(plateformTarget, data.sortedPlatforms)
 }
 
-export { loadData, renderGraphics, animateGraphics }
+async function generateStreamChart(targetId) {
+    const rawData = await DATA
+    const target = select(`#${targetId}`)
+
+    const platformsKeys = [
+        ...new Set(
+            rawData.flatMap((d) => {
+                d.platforms = d.platforms.split(',').map((p) => p.trim())
+                d.platforms = d.platforms.map((p) => p.replace(/[\[\]']+/g, ''))
+                return d.platforms.filter((p) => p)
+            })
+        ),
+    ]
+
+    const genresKeys = [
+        ...new Set(
+            rawData.flatMap((d) => {
+                d.genres = d.genres.split(',').map((p) => p.trim())
+                d.genres = d.genres.map((p) => p.replace(/[\[\]']+/g, ''))
+                return d.genres.filter((g) => g)
+            })
+        ),
+    ]
+
+    // from the rawData make an array of objects with the year with the key "year" and the count of each platform for that year with the key of the name of the platform
+    // i want to have something like this:
+    // [
+    //     { year: '2019', ps4: 10, switch: 5, pc: 3 },
+    //     { year: '2020', ps4: 8, switch: 7, pc: 5 },
+    //     { year: '2021', ps4: 6, switch: 9, pc: 4 },
+    // ]
+    const nodata = rawData.reduce((acc, d) => {
+        const year = moment(d.date).format('YYYY')
+        if (year === 'Invalid date') return acc
+
+        const obj = acc.find((o) => o.year === year)
+        if (!obj) {
+            const newObj = { year }
+
+            // Initialize all platforms with a value of 0
+            platformsKeys.forEach((platform) => {
+                newObj[platform] = 0
+            })
+
+            d.platforms.forEach((platform) => {
+                newObj[platform]++
+            })
+            acc.push(newObj)
+        } else {
+            d.platforms.forEach((platform) => {
+                obj[platform]++
+            })
+        }
+        return acc
+    }, [])
+
+    const nodataG = rawData.reduce((acc, d) => {
+        const year = moment(d.date).format('YYYY')
+        if (year === 'Invalid date') return acc
+
+        const obj = acc.find((o) => o.year === year)
+        if (!obj) {
+            const newObj = { year }
+
+            // Initialize all genres with a value of 0
+            genresKeys.forEach((genre) => {
+                newObj[genre] = 0
+            })
+
+            d.genres.forEach((genre) => {
+                newObj[genre]++
+            })
+            acc.push(newObj)
+        } else {
+            d.genres.forEach((genre) => {
+                obj[genre]++
+            })
+        }
+        return acc
+    }, [])
+
+    // Fill in missing years
+    const dataPlatform = nodata.sort((a, b) => a.year - b.year)
+    for (let i = 1; i < nodata.length; i++) {
+        const currentYear = nodata[i].year.toString()
+        const previousYear = nodata[i - 1].year.toString()
+        if (parseInt(currentYear) - parseInt(previousYear) > 1) {
+            for (
+                let j = parseInt(previousYear) + 1;
+                j < parseInt(currentYear);
+                j++
+            ) {
+                const newObj = { year: j.toString() }
+                platformsKeys.forEach((platform) => {
+                    newObj[platform] = 0
+                })
+                nodata.splice(i, 0, newObj)
+                i++
+            }
+        }
+    }
+
+    const dataGenre = nodataG.sort((a, b) => a.year - b.year)
+    for (let i = 1; i < nodataG.length; i++) {
+        const currentYear = nodataG[i].year.toString()
+        const previousYear = nodataG[i - 1].year.toString()
+        if (parseInt(currentYear) - parseInt(previousYear) > 1) {
+            for (
+                let j = parseInt(previousYear) + 1;
+                j < parseInt(currentYear);
+                j++
+            ) {
+                const newObj = { year: j.toString() }
+                genresKeys.forEach((platform) => {
+                    newObj[platform] = 0
+                })
+                nodataG.splice(i, 0, newObj)
+                i++
+            }
+        }
+    }
+
+    // make an array with the 2 sets of data
+    const data = [dataPlatform, dataGenre]
+
+    // const data = rawData.map((d) => {
+    //     // parse platforms and genres into arrays
+    //     d.platforms = d.platforms.split(',').map((p) => p.trim())
+    //     d.genres = d.genres.split(',').map((p) => p.trim())
+    //     // replace ' [] with nothing for platforms and genres
+    //     d.platforms = d.platforms.map((p) => p.replace(/[\[\]']+/g, ''))
+    //     d.genres = d.genres.map((p) => p.replace(/[\[\]']+/g, ''))
+    //     return {
+    //         date: moment(d.date),
+    //         name: d.name,
+    //         platforms: d.platforms,
+    //         genres: d.genres,
+    //     }
+    // })
+
+    // const platformsKeys = [
+    //     ...new Set(
+    //         data.flatMap((d) => {
+    //             return d.platforms.filter((p) => p)
+    //         })
+    //     ),
+    // ]
+    // // const genresKeys = [
+    // //     ...new Set(
+    // //         data.flatMap((d) => {
+    // //             return d.genres.filter((g) => g)
+    // //         })
+    // //     ),
+    // // ]
+
+    // const dico = new Map()
+    // data.forEach((d) => {
+    //     const year = d.date.format('YYYY')
+    //     if (year === 'Invalid date') return
+
+    //     d.platforms.forEach((platform) => {
+    //         if (!platform) return
+    //         if (!dico.has(year)) dico.set(year, {})
+    //         if (!dico.get(year)[platform]) dico.get(year)[platform] = 0
+    //         dico.get(year)[platform]++
+    //     })
+
+    //     d.genres.forEach((genre) => {
+    //         if (!genre) return
+    //         if (!dico.has(year)) dico.set(year, {})
+    //         if (!dico.get(year)[genre]) dico.get(year)[genre] = 0
+    //         dico.get(year)[genre]++
+    //     })
+    // })
+
+    // set the dimensions and margins of the graph
+    const margin = { top: 20, right: 30, bottom: 30, left: 60 },
+        // width = 460 - margin.left - margin.right,
+        // height = 400 - margin.top - margin.bottom
+        width =
+            select(`#${targetId}`).node().getBoundingClientRect().width -
+            margin.left -
+            margin.right,
+        height =
+            select(`#${targetId}`).node().getBoundingClientRect().height -
+            margin.top -
+            margin.bottom
+
+    // append the svg object to the body of the page
+    const svg = target
+        .append('svg')
+        .attr('width', width + margin.left + margin.right)
+        .attr('height', height + margin.top + margin.bottom)
+        .append('g')
+        .attr('transform', `translate(${margin.left}, ${margin.top})`)
+
+    // List of groups = header of the csv files
+    const keys = Object.keys(dataPlatform[0]).slice(1)
+
+    // Add X axis
+    const x = scaleLinear()
+        .domain(
+            extent(dataPlatform, function (d) {
+                return d.year
+            })
+        )
+        .range([0, width])
+    svg.append('g')
+        .attr('transform', `translate(0, ${height * 0.8})`)
+        .call(
+            axisBottom(x)
+                .tickSize(-height * 0.7)
+                .tickValues([1900, 1925, 1975, 2000])
+        )
+        .select('.domain')
+        .remove()
+    // Customization
+    svg.selectAll('.tick line').attr('stroke', '#b8b8b8')
+
+    // Add X axis label:
+    svg.append('text')
+        .attr('text-anchor', 'end')
+        .attr('x', width)
+        .attr('y', height - 30)
+        .text('Time (year)')
+
+    // Add Y axis
+    const y = scaleLinear().domain([-10000, 10000]).range([height, 0])
+
+    // color palette
+    const color = scaleOrdinal().domain(keys).range(schemeDark2)
+
+    // create a tooltip
+    const Tooltip = svg
+        .append('text')
+        .attr('x', 0)
+        .attr('y', 0)
+        .style('opacity', 0)
+        .style('font-size', 17)
+
+    // Three function that change the tooltip when user hover / move / leave a cell
+    const mouseover = function (event, d) {
+        Tooltip.style('opacity', 1)
+        selectAll('.myArea').style('opacity', 0.2)
+        select(this).style('stroke', 'black').style('opacity', 1)
+    }
+    const mousemove = function (event, d, i) {
+        const grp = d.key
+        Tooltip.text(grp)
+    }
+    const mouseleave = function (event, d) {
+        Tooltip.style('opacity', 0)
+        selectAll('.myArea').style('opacity', 1).style('stroke', 'none')
+    }
+
+    // Area generator
+    const theArea = area()
+        .x(function (d) {
+            return x(d.data.year)
+        })
+        .y0(function (d) {
+            return y(d[0])
+        })
+        .y1(function (d) {
+            return y(d[1])
+        })
+
+    // Show the areas
+    // svg.selectAll('mylayers')
+    //     .data(stackedData)
+    //     .join('path')
+    //     .attr('class', 'myArea')
+    //     .style('fill', function (d) {
+    //         return color(d.key)
+    //     })
+    //     .attr('d', theArea)
+    //     .on('mouseover', mouseover)
+    //     .on('mousemove', mousemove)
+    //     .on('mouseleave', mouseleave)
+
+    // make a data array with the data at 0
+    const dataToZero = dataPlatform.map((d) => {
+        const newObj = { year: d.year }
+        keys.forEach((key) => {
+            newObj[key] = 0
+        })
+        return newObj
+    })
+
+    updateStreamChart(dataToZero)
+
+    setTimeout(() => {
+        updateStreamChart(dataPlatform)
+    }, 6000)
+
+    function updateStreamChart(data) {
+        const keys = Object.keys(data[0]).slice(1)
+        const stackedData = stack().offset(stackOffsetSilhouette).keys(keys)(
+            data
+        )
+
+        target
+            .select('svg')
+            .selectAll('mylayers')
+            .data(stackedData)
+            .join(
+                (enter) => {
+                    return enter
+                        .append('path')
+                        .attr('class', 'myArea')
+                        .style('fill', function (d) {
+                            return color(d.key)
+                        })
+                        .attr('d', theArea)
+                },
+                (update) => {
+                    return update
+                        .transition()
+                        .ease(easeElasticOut)
+                        .delay((d, i) => i * 150)
+                        .duration(800)
+                        .attr('d', theArea)
+                },
+                (exit) => exit.remove()
+            )
+            .on('mouseover', mouseover)
+            .on('mousemove', mousemove)
+            .on('mouseleave', mouseleave)
+    }
+}
+
+export { loadData, renderGraphics, animateGraphics, generateStreamChart }
