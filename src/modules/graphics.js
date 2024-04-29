@@ -427,7 +427,7 @@ async function generateStreamChart(targetId) {
         .call(
             axisBottom(x)
                 .tickSize(-height * 0.7)
-                .tickValues([1900, 1925, 1975, 2000])
+                .tickValues([1950, 1975, 2000, 2023]) // TODO: Calculate the tick values from the data
         )
         .select('.domain')
         .remove()
@@ -442,7 +442,7 @@ async function generateStreamChart(targetId) {
         .text('Time (year)')
 
     // Add Y axis
-    const y = scaleLinear().domain([-10000, 10000]).range([height, 0])
+    const y = scaleLinear().domain([-10000, 10000]).range([height, 0]) // TODO: Calculate the domain from the data
 
     // color palette
     const color = scaleOrdinal().domain(keys).range(schemeDark2)
