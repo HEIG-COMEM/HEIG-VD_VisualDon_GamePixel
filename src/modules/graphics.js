@@ -216,9 +216,167 @@ async function animateGraphics(year) {
     animateGraphic(plateformTarget, data.sortedPlatforms)
 }
 
-async function generateStreamChart(targetId) {
-    const rawData = await DATA
+function generateStreamChart(targetId, data) {
     const target = select(`#${targetId}`)
+    console.log(data)
+
+    // set the dimensions and margins of the graph
+    const margin = { top: 20, right: 30, bottom: 30, left: 60 },
+        // width = 460 - margin.left - margin.right,
+        // height = 400 - margin.top - margin.bottom
+        width =
+            select(`#${targetId}`).node().getBoundingClientRect().width -
+            margin.left -
+            margin.right,
+        height =
+            select(`#${targetId}`).node().getBoundingClientRect().height -
+            margin.top -
+            margin.bottom
+
+    // append the svg object to the body of the page
+    const svg = target
+        .append('svg')
+        .attr('width', width + margin.left + margin.right)
+        .attr('height', height + margin.top + margin.bottom)
+        .append('g')
+        .attr('transform', `translate(${margin.left}, ${margin.top})`)
+
+    // List of groups = header of the csv files
+    const keys = Object.keys(data[0]).slice(1)
+
+    // Calculate the tick Values
+    const tick = Math.floor(data.length / 4)
+    const tickValues = [
+        data[0].year,
+        data[tick * 2].year,
+        data[tick * 3].year,
+        data.at(-1).year,
+    ]
+
+    // Add X axis
+    const x = scaleLinear()
+        .domain(
+            extent(data, function (d) {
+                return d.year
+            })
+        )
+        .range([0, width])
+    svg.append('g')
+        .attr('transform', `translate(0, ${height * 0.8})`)
+        .call(
+            axisBottom(x)
+                .tickSize(-height * 0.7)
+                .tickValues(tickValues)
+                .tickFormat((d) => d)
+        )
+        .select('.domain')
+        .remove()
+    // Customization
+    svg.selectAll('.tick line').attr('stroke', '#f5f5f5')
+
+    // Add X axis label:
+    svg.append('text')
+        .attr('text-anchor', 'end')
+        .attr('x', width)
+        .attr('y', height - 30)
+        .text('Time (year)')
+        .style('fill', '#f5f5f5')
+
+    // calculate the max value of all plateform
+    const stackedData = stack().offset(stackOffsetSilhouette).keys(keys)(data)
+
+    const maxi = stackedData.reduce((acc, d) => {
+        const thisMax = max(d, (e) => e[1])
+        return thisMax > acc ? thisMax : acc
+    }, 0)
+
+    // Add Y axis
+    const y = scaleLinear().domain([-maxi, maxi]).range([height, 0])
+
+    // color palette
+    const color = scaleOrdinal().domain(keys).range(schemeDark2)
+
+    // create a tooltip
+    const Tooltip = svg
+        .append('text')
+        .attr('x', 0)
+        .attr('y', 0)
+        .style('opacity', 0)
+        .style('font-size', 17)
+        .style('fill', '#be865b')
+
+    // Three function that change the tooltip when user hover / move / leave a cell
+    const mouseover = function (event, d) {
+        Tooltip.style('opacity', 1)
+        selectAll('.myArea').style('opacity', 0.2)
+        select(this).style('stroke', '#f5f5f5').style('opacity', 1)
+    }
+    const mousemove = function (event, d, i) {
+        const grp = d.key
+        Tooltip.text(grp)
+    }
+    const mouseleave = function (event, d) {
+        Tooltip.style('opacity', 0)
+        selectAll('.myArea').style('opacity', 1).style('stroke', 'none')
+    }
+
+    // Area generator
+    const theArea = area()
+        .x(function (d) {
+            return x(d.data.year)
+        })
+        .y0(function (d) {
+            return y(d[0])
+        })
+        .y1(function (d) {
+            return y(d[1])
+        })
+
+    // Show the areas
+    svg.selectAll('mylayers')
+        .data(stackedData)
+        .join('path')
+        .attr('class', 'myArea')
+        .style('fill', function (d) {
+            return color(d.key)
+        })
+        .attr('d', theArea)
+        .on('mouseover', mouseover)
+        .on('mousemove', mousemove)
+        .on('mouseleave', mouseleave)
+
+    // target
+    //     .select('svg')
+    //     .selectAll('mylayers')
+    //     .data(stackedData)
+    //     .join(
+    //         (enter) => {
+    //             return enter
+    //                 .append('path')
+    //                 .attr('class', 'myArea')
+    //                 .style('fill', function (d) {
+    //                     return color(d.key)
+    //                 })
+    //                 .attr('d', theArea)
+    //                 .attr('transform', `translate(${margin.left}, 0)`)
+    //         },
+    //         (update) => {
+    //             return update
+    //                 .transition()
+    //                 .ease(easeElasticOut)
+    //                 .delay((d, i) => i * 150)
+    //                 .duration(800)
+    //                 .attr('d', theArea)
+    //         },
+    //         (exit) => exit.remove()
+    //     )
+    //     .on('mouseover', mouseover)
+    //     .on('mousemove', mousemove)
+    //     .on('mouseleave', mouseleave)
+}
+
+async function renderStreamChart() {
+    const rawData = await DATA
 
     const platformsKeys = [
         ...new Set(
@@ -240,14 +398,7 @@ async function generateStreamChart(targetId) {
         ),
     ]
 
-    // from the rawData make an array of objects with the year with the key "year" and the count of each platform for that year with the key of the name of the platform
-    // i want to have something like this:
-    // [
-    //     { year: '2019', ps4: 10, switch: 5, pc: 3 },
-    //     { year: '2020', ps4: 8, switch: 7, pc: 5 },
-    //     { year: '2021', ps4: 6, switch: 9, pc: 4 },
-    // ]
-    const nodata = rawData.reduce((acc, d) => {
+    const missingYearDataPlatform = rawData.reduce((acc, d) => {
         const year = moment(d.date).format('YYYY')
         if (year === 'Invalid date') return acc
 
@@ -272,7 +423,7 @@ async function generateStreamChart(targetId) {
         return acc
     }, [])
 
-    const nodataG = rawData.reduce((acc, d) => {
+    const missingYearDataGenre = rawData.reduce((acc, d) => {
         const year = moment(d.date).format('YYYY')
         if (year === 'Invalid date') return acc
 
@@ -298,10 +449,10 @@ async function generateStreamChart(targetId) {
     }, [])
 
     // Fill in missing years
-    const dataPlatform = nodata.sort((a, b) => a.year - b.year)
-    for (let i = 1; i < nodata.length; i++) {
-        const currentYear = nodata[i].year.toString()
-        const previousYear = nodata[i - 1].year.toString()
+    const dataPlatform = missingYearDataPlatform.sort((a, b) => a.year - b.year)
+    for (let i = 1; i < missingYearDataPlatform.length; i++) {
+        const currentYear = missingYearDataPlatform[i].year.toString()
+        const previousYear = missingYearDataPlatform[i - 1].year.toString()
         if (parseInt(currentYear) - parseInt(previousYear) > 1) {
             for (
                 let j = parseInt(previousYear) + 1;
@@ -312,16 +463,16 @@ async function generateStreamChart(targetId) {
                 platformsKeys.forEach((platform) => {
                     newObj[platform] = 0
                 })
-                nodata.splice(i, 0, newObj)
+                missingYearDataPlatform.splice(i, 0, newObj)
                 i++
             }
         }
     }
 
-    const dataGenre = nodataG.sort((a, b) => a.year - b.year)
-    for (let i = 1; i < nodataG.length; i++) {
-        const currentYear = nodataG[i].year.toString()
-        const previousYear = nodataG[i - 1].year.toString()
+    const dataGenre = missingYearDataGenre.sort((a, b) => a.year - b.year)
+    for (let i = 1; i < missingYearDataGenre.length; i++) {
+        const currentYear = missingYearDataGenre[i].year.toString()
+        const previousYear = missingYearDataGenre[i - 1].year.toString()
         if (parseInt(currentYear) - parseInt(previousYear) > 1) {
             for (
                 let j = parseInt(previousYear) + 1;
@@ -332,188 +483,14 @@ async function generateStreamChart(targetId) {
                 genresKeys.forEach((platform) => {
                     newObj[platform] = 0
                 })
-                nodataG.splice(i, 0, newObj)
+                missingYearDataGenre.splice(i, 0, newObj)
                 i++
             }
         }
     }
 
-    // set the dimensions and margins of the graph
-    const margin = { top: 20, right: 30, bottom: 30, left: 60 },
-        // width = 460 - margin.left - margin.right,
-        // height = 400 - margin.top - margin.bottom
-        width =
-            select(`#${targetId}`).node().getBoundingClientRect().width -
-            margin.left -
-            margin.right,
-        height =
-            select(`#${targetId}`).node().getBoundingClientRect().height -
-            margin.top -
-            margin.bottom
-
-    // append the svg object to the body of the page
-    const svg = target
-        .append('svg')
-        .attr('width', width + margin.left + margin.right)
-        .attr('height', height + margin.top + margin.bottom)
-        .append('g')
-        .attr('transform', `translate(${margin.left}, ${margin.top})`)
-
-    // List of groups = header of the csv files
-    const keys = Object.keys(dataPlatform[0]).slice(1)
-
-    // Calculate the tick Values
-    const tick = Math.floor(dataPlatform.length / 4)
-    const tickValues = [
-        dataPlatform[0].year,
-        dataPlatform[tick * 2].year,
-        dataPlatform[tick * 3].year,
-        dataPlatform.at(-1).year,
-    ]
-    console.log(tickValues)
-
-    // Add X axis
-    const x = scaleLinear()
-        .domain(
-            extent(dataPlatform, function (d) {
-                return d.year
-            })
-        )
-        .range([0, width])
-    svg.append('g')
-        .attr('transform', `translate(0, ${height * 0.8})`)
-        .call(
-            axisBottom(x)
-                .tickSize(-height * 0.7)
-                .tickValues(tickValues)
-                .tickFormat((d) => d)
-        )
-        .select('.domain')
-        .remove()
-    // Customization
-    svg.selectAll('.tick line').attr('stroke', '#b8b8b8')
-
-    // Add X axis label:
-    svg.append('text')
-        .attr('text-anchor', 'end')
-        .attr('x', width)
-        .attr('y', height - 30)
-        .text('Time (year)')
-
-    // calculate the max value of all plateform
-    const stackedData = stack().offset(stackOffsetSilhouette).keys(keys)(
-        dataPlatform
-    )
-
-    const maxi = stackedData.reduce((acc, d) => {
-        const thisMax = max(d, (e) => e[1])
-        return thisMax > acc ? thisMax : acc
-    }, 0)
-
-    // Add Y axis
-    const y = scaleLinear().domain([-maxi, maxi]).range([height, 0])
-
-    // color palette
-    const color = scaleOrdinal().domain(keys).range(schemeDark2)
-
-    // create a tooltip
-    const Tooltip = svg
-        .append('text')
-        .attr('x', 0)
-        .attr('y', 0)
-        .style('opacity', 0)
-        .style('font-size', 17)
-
-    // Three function that change the tooltip when user hover / move / leave a cell
-    const mouseover = function (event, d) {
-        Tooltip.style('opacity', 1)
-        selectAll('.myArea').style('opacity', 0.2)
-        select(this).style('stroke', 'black').style('opacity', 1)
-    }
-    const mousemove = function (event, d, i) {
-        const grp = d.key
-        Tooltip.text(grp)
-    }
-    const mouseleave = function (event, d) {
-        Tooltip.style('opacity', 0)
-        selectAll('.myArea').style('opacity', 1).style('stroke', 'none')
-    }
-
-    // Area generator
-    const theArea = area()
-        .x(function (d) {
-            return x(d.data.year)
-        })
-        .y0(function (d) {
-            return y(d[0])
-        })
-        .y1(function (d) {
-            return y(d[1])
-        })
-
-    // Show the areas
-    // svg.selectAll('mylayers')
-    //     .data(stackedData)
-    //     .join('path')
-    //     .attr('class', 'myArea')
-    //     .style('fill', function (d) {
-    //         return color(d.key)
-    //     })
-    //     .attr('d', theArea)
-    //     .on('mouseover', mouseover)
-    //     .on('mousemove', mousemove)
-    //     .on('mouseleave', mouseleave)
-
-    // make a data array with the data at 0
-    const dataToZero = dataPlatform.map((d) => {
-        const newObj = { year: d.year }
-        keys.forEach((key) => {
-            newObj[key] = 0
-        })
-        return newObj
-    })
-
-    updateStreamChart(dataToZero)
-
-    setTimeout(() => {
-        updateStreamChart(dataPlatform)
-    }, 6000)
-
-    function updateStreamChart(data) {
-        const keys = Object.keys(data[0]).slice(1)
-        const stackedData = stack().offset(stackOffsetSilhouette).keys(keys)(
-            data
-        )
-
-        target
-            .select('svg')
-            .selectAll('mylayers')
-            .data(stackedData)
-            .join(
-                (enter) => {
-                    return enter
-                        .append('path')
-                        .attr('class', 'myArea')
-                        .style('fill', function (d) {
-                            return color(d.key)
-                        })
-                        .attr('d', theArea)
-                        .attr('transform', `translate(${margin.left}, 0)`)
-                },
-                (update) => {
-                    return update
-                        .transition()
-                        .ease(easeElasticOut)
-                        .delay((d, i) => i * 150)
-                        .duration(800)
-                        .attr('d', theArea)
-                },
-                (exit) => exit.remove()
-            )
-            .on('mouseover', mouseover)
-            .on('mousemove', mousemove)
-            .on('mouseleave', mouseleave)
-    }
+    generateStreamChart('streamgraph', dataPlatform)
+    // generateStreamChart('streamgraph', dataGenre)
 }
 
-export { loadData, renderGraphics, animateGraphics, generateStreamChart }
+export { loadData, renderGraphics, animateGraphics, renderStreamChart }

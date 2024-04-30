@@ -8,7 +8,4 @@
 #streamgraph {
     width: 93vw;
     height: 70vh;
-
-    /* TODO: Remove - For debug purposes only */
-    background-color: red;
 }
