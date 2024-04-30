@@ -8,6 +8,7 @@ import { transition } from 'd3-transition'
 import { extent } from 'd3-array'
 import { area, stackOffsetSilhouette, stack } from 'd3-shape'
 import { schemeDark2 } from 'd3-scale-chromatic'
+import { max } from 'd3-array'
 
 const dataReady = new CustomEvent('dataReady')
 
@@ -337,59 +338,6 @@ async function generateStreamChart(targetId) {
         }
     }
 
-    // make an array with the 2 sets of data
-    const data = [dataPlatform, dataGenre]
-
-    // const data = rawData.map((d) => {
-    //     // parse platforms and genres into arrays
-    //     d.platforms = d.platforms.split(',').map((p) => p.trim())
-    //     d.genres = d.genres.split(',').map((p) => p.trim())
-    //     // replace ' [] with nothing for platforms and genres
-    //     d.platforms = d.platforms.map((p) => p.replace(/[\[\]']+/g, ''))
-    //     d.genres = d.genres.map((p) => p.replace(/[\[\]']+/g, ''))
-    //     return {
-    //         date: moment(d.date),
-    //         name: d.name,
-    //         platforms: d.platforms,
-    //         genres: d.genres,
-    //     }
-    // })
-
-    // const platformsKeys = [
-    //     ...new Set(
-    //         data.flatMap((d) => {
-    //             return d.platforms.filter((p) => p)
-    //         })
-    //     ),
-    // ]
-    // // const genresKeys = [
-    // //     ...new Set(
-    // //         data.flatMap((d) => {
-    // //             return d.genres.filter((g) => g)
-    // //         })
-    // //     ),
-    // // ]
-
-    // const dico = new Map()
-    // data.forEach((d) => {
-    //     const year = d.date.format('YYYY')
-    //     if (year === 'Invalid date') return
-
-    //     d.platforms.forEach((platform) => {
-    //         if (!platform) return
-    //         if (!dico.has(year)) dico.set(year, {})
-    //         if (!dico.get(year)[platform]) dico.get(year)[platform] = 0
-    //         dico.get(year)[platform]++
-    //     })
-
-    //     d.genres.forEach((genre) => {
-    //         if (!genre) return
-    //         if (!dico.has(year)) dico.set(year, {})
-    //         if (!dico.get(year)[genre]) dico.get(year)[genre] = 0
-    //         dico.get(year)[genre]++
-    //     })
-    // })
-
     // set the dimensions and margins of the graph
     const margin = { top: 20, right: 30, bottom: 30, left: 60 },
         // width = 460 - margin.left - margin.right,
@@ -414,6 +362,16 @@ async function generateStreamChart(targetId) {
     // List of groups = header of the csv files
     const keys = Object.keys(dataPlatform[0]).slice(1)
 
+    // Calculate the tick Values
+    const tick = Math.floor(dataPlatform.length / 4)
+    const tickValues = [
+        dataPlatform[0].year,
+        dataPlatform[tick * 2].year,
+        dataPlatform[tick * 3].year,
+        dataPlatform.at(-1).year,
+    ]
+    console.log(tickValues)
+
     // Add X axis
     const x = scaleLinear()
         .domain(
@@ -427,7 +385,8 @@ async function generateStreamChart(targetId) {
         .call(
             axisBottom(x)
                 .tickSize(-height * 0.7)
-                .tickValues([1950, 1975, 2000, 2023]) // TODO: Calculate the tick values from the data
+                .tickValues(tickValues)
+                .tickFormat((d) => d)
         )
         .select('.domain')
         .remove()
@@ -441,8 +400,18 @@ async function generateStreamChart(targetId) {
         .attr('y', height - 30)
         .text('Time (year)')
 
+    // calculate the max value of all plateform
+    const stackedData = stack().offset(stackOffsetSilhouette).keys(keys)(
+        dataPlatform
+    )
+
+    const maxi = stackedData.reduce((acc, d) => {
+        const thisMax = max(d, (e) => e[1])
+        return thisMax > acc ? thisMax : acc
+    }, 0)
+
     // Add Y axis
-    const y = scaleLinear().domain([-10000, 10000]).range([height, 0]) // TODO: Calculate the domain from the data
+    const y = scaleLinear().domain([-maxi, maxi]).range([height, 0])
 
     // color palette
     const color = scaleOrdinal().domain(keys).range(schemeDark2)
@@ -529,6 +498,7 @@ async function generateStreamChart(targetId) {
                             return color(d.key)
                         })
                         .attr('d', theArea)
+                        .attr('transform', `translate(${margin.left}, 0)`)
                 },
                 (update) => {
                     return update
