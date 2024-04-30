@@ -67,6 +67,12 @@ Pour visualiser les wireframes de notre application GamePixel, veuillez consulte
 
 [Wireframes GamePixel](https://www.figma.com/file/axoVljvnAqJTVqeDaO9lGX/HEIG---VisualDon---GamePixel?type=design&node-id=0%3A1&mode=design&t=tP3qa7rEcix13GWp-1)
 
+## 🧑‍💻 Site web
+
+Afin de mettre en ligne notre application, nous avons utilisé le service de déploiement de site web [Netlify](https://www.netlify.com/). Vous pouvez accéder à notre application en cliquant sur le lien ci-dessous :
+
+[GamePixel](https://gamepixel-visualdon.netlify.app/)
+
 ## 📚 Références
 
 -   Pour réaliser ce projet, nous avons utilisé les données provenant de [Kaggle](https://www.kaggle.com/datasets/gsimonx37/backloggd)
