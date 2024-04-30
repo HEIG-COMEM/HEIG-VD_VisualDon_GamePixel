@@ -9,7 +9,7 @@ import { transition } from 'd3-transition'
 const dataReady = new CustomEvent('dataReady')
 
 async function loadData() {
-    const data = await csv('/src/data/backloggd.csv')
+    const data = await csv('/data/backloggd.csv')
     document.dispatchEvent(dataReady)
     return data
 }

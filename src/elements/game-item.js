@@ -1,7 +1,7 @@
 class GameItem extends HTMLElement {
     connectedCallback() {
         const title = this.getAttribute('title')
-        const BASE_URL = '/src/assets/posters/'
+        const BASE_URL = '/posters/'
         const imgURL = `${BASE_URL}${this.getAttribute('image')}`
         const genres = this.getAttribute('genres').split(',')
         const platforms = this.getAttribute('platforms').split(',')

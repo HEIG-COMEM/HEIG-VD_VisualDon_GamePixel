@@ -9,7 +9,7 @@ export default class EventManager {
     }
 
     async #loadData() {
-        await fetch('/src/data/events.json')
+        await fetch('/data/events.json')
             .then((response) => response.json())
             .then((data) => {
                 this.#events = data.events

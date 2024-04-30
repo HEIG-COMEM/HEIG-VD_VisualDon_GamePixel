@@ -1,7 +1,7 @@
 class GameCard extends HTMLElement {
     connectedCallback() {
         const title = this.getAttribute('title')
-        const BASE_URL = '/src/assets/posters/'
+        const BASE_URL = '/posters/'
         const imgURL = `${BASE_URL}${this.getAttribute('image')}`
         const genres = JSON.parse(this.getAttribute('genres'))
         const platforms = JSON.parse(this.getAttribute('platforms'))
