@@ -63,7 +63,7 @@ const SCRIPT = {
     },
 }
 
-const preventDefault = (e) => e.preventDefault() && console.log('key prevented')
+const preventDefault = (e) => e.preventDefault()
 
 Object.keys(SCRIPT).forEach((key) => {
     const script = SCRIPT[key]
