@@ -49,4 +49,11 @@ document.querySelector('#game-cards').addEventListener('click', (e) => {
 })
 window.addEventListener('popstate', hideCard)
 
-renderStreamChart('genres')
+document.querySelector('#summary-switch').addEventListener('click', (e) => {
+    if (e.target.id === 'genre') {
+        renderStreamChart('genres')
+    }
+    if (e.target.id === 'platform') {
+        renderStreamChart('platforms')
+    }
+})

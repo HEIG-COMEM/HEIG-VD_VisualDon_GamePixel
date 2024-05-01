@@ -219,6 +219,8 @@ async function animateGraphics(year) {
 function generateStreamChart(targetId, data) {
     const target = select(`#${targetId}`)
 
+    target.selectAll('svg').remove()
+
     // set the dimensions and margins of the graph
     const margin = { top: 20, right: 30, bottom: 30, left: 60 },
         // width = 460 - margin.left - margin.right,
