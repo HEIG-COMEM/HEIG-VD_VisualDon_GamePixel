@@ -13,6 +13,7 @@
     padding: 10px;
     margin-left: 15px;
     border: 1px solid var(--gold);
+    background-color: var(--dark);
 }
 
 #speech span.hint {
