@@ -101,6 +101,7 @@ const SCRIPT = {
         isRepeatable: false,
         count: 0,
         destroy_trigger: false,
+        showBackDrop: true,
     },
 }
 
@@ -122,6 +123,13 @@ Object.keys(SCRIPT).forEach((key) => {
                     triggerSection.addEventListener('wheel', preventDefault)
                     window.addEventListener('keydown', preventDefault)
                 }
+
+                if (script.showBackDrop) {
+                    const backDrop = document.createElement('div')
+                    backDrop.id = 'pixie-backdrop'
+                    document.body.appendChild(backDrop)
+                }
+
                 for (const step of script.steps) {
                     pixie.move(
                         step.position.x,
@@ -133,6 +141,9 @@ Object.keys(SCRIPT).forEach((key) => {
                 }
                 script.count++
                 pixie.moveToIdle()
+
+                if (script.showBackDrop)
+                    document.querySelector('#pixie-backdrop').remove()
 
                 if (!script.isSkippable) {
                     triggerSection.removeEventListener('wheel', preventDefault)

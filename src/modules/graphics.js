@@ -291,7 +291,7 @@ function generateStreamChart(targetId, data) {
         .attr('x', 0)
         .attr('y', 0)
         .style('opacity', 0)
-        .style('font-size', 17)
+        .style('font-size', '1.5rem')
         .style('fill', '#be865b')
 
     // Three function that change the tooltip when user hover / move / leave a cell

@@ -6,6 +6,7 @@
     width: 10px;
     background-color: var(--gold);
     transition: all 0.5s ease-in-out;
+    z-index: 9999;
 }
 
 #speech {
@@ -19,4 +20,14 @@
 #speech span.hint {
     color: var(--gold);
     font-size: 12px;
+}
+
+#pixie-backdrop {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: var(--dark-opacity);
+    top: 0;
+    left: 0;
+    z-index: 1;
 }
