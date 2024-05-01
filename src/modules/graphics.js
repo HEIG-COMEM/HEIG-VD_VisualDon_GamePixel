@@ -7,7 +7,7 @@ import { axisLeft, axisBottom } from 'd3-axis'
 import { transition } from 'd3-transition'
 import { extent } from 'd3-array'
 import { area, stackOffsetSilhouette, stack, line } from 'd3-shape'
-import { schemeDark2 } from 'd3-scale-chromatic'
+import {} from 'd3-scale-chromatic'
 import { max } from 'd3-array'
 
 const dataReady = new CustomEvent('dataReady')
@@ -200,7 +200,7 @@ function animateGraphic(target, data) {
         .transition()
         .ease(easeElasticOut)
         .duration(800)
-        .delay((d, i) => i * 150)
+        .delay((d, i) => i * 50)
         .attr('width', (d) => x(d[1]))
 }
 
@@ -293,7 +293,9 @@ function generateStreamChart(targetId, data) {
     const y = scaleLinear().domain([-maxi, maxi]).range([height, 0])
 
     // color palette
-    const color = scaleOrdinal().domain(keys).range(schemeDark2)
+    const color = scaleOrdinal()
+        .domain(keys)
+        .range(['#BE865B', '#FFD7A8', '#86542C', '#3E1500'])
 
     // create a tooltip
     const Tooltip = svg
