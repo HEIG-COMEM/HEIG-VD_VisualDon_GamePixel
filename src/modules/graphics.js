@@ -20,6 +20,11 @@ async function loadData() {
 
 async function parseData(year) {
     year = moment(year).format('YYYY')
+
+    if (sessionStorage.getItem(`GamePixel-${year}`)) {
+        return JSON.parse(sessionStorage.getItem(`GamePixel-${year}`))
+    }
+
     const data = await loadData()
     const games = data
         .filter((d) => moment(d.date).format('YYYY') === year)
@@ -72,9 +77,7 @@ async function parseData(year) {
 
 async function renderGraphics(yearNumber) {
     const year = yearNumber.toString()
-    const data = sessionStorage.getItem(`GamePixel-${year}`)
-        ? JSON.parse(sessionStorage.getItem(`GamePixel-${year}`))
-        : await parseData(year)
+    const data = await parseData(year)
 
     const genreTarget = `div[data-id="event-${year}"] .graph_genre`
     const plateformTarget = `div[data-id="event-${year}"] .graph_plateform`
