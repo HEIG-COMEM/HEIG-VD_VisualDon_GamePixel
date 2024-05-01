@@ -62,12 +62,19 @@ async function parseData(year) {
         .sort((a, b) => b[1] - a[1])
         .slice(0, 10)
 
+    sessionStorage.setItem(
+        `GamePixel-${year}`,
+        JSON.stringify({ sortedPlatforms, sortedGenres })
+    )
+
     return { sortedPlatforms, sortedGenres }
 }
 
 async function renderGraphics(yearNumber) {
     const year = yearNumber.toString()
-    const data = await parseData(year)
+    const data = sessionStorage.getItem(`GamePixel-${year}`)
+        ? JSON.parse(sessionStorage.getItem(`GamePixel-${year}`))
+        : await parseData(year)
 
     const genreTarget = `div[data-id="event-${year}"] .graph_genre`
     const plateformTarget = `div[data-id="event-${year}"] .graph_plateform`
