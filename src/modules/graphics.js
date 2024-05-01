@@ -19,7 +19,6 @@ async function loadData() {
 }
 
 async function parseData(year) {
-    console.log('Parsing data for year:', year)
     year = moment(year).format('YYYY')
     const data = await loadData()
     const games = data
