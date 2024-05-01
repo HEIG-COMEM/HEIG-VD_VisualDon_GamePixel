@@ -49,4 +49,4 @@ document.querySelector('#game-cards').addEventListener('click', (e) => {
 })
 window.addEventListener('popstate', hideCard)
 
-renderStreamChart()
+renderStreamChart('genres')

@@ -218,7 +218,6 @@ async function animateGraphics(year) {
 
 function generateStreamChart(targetId, data) {
     const target = select(`#${targetId}`)
-    console.log(data)
 
     // set the dimensions and margins of the graph
     const margin = { top: 20, right: 30, bottom: 30, left: 60 },
@@ -375,122 +374,143 @@ function generateStreamChart(targetId, data) {
     //     .on('mouseleave', mouseleave)
 }
 
-async function renderStreamChart() {
+async function renderStreamChart(graph) {
     const rawData = await DATA
 
-    const platformsKeys = [
-        ...new Set(
-            rawData.flatMap((d) => {
-                d.platforms = d.platforms.split(',').map((p) => p.trim())
-                d.platforms = d.platforms.map((p) => p.replace(/[\[\]']+/g, ''))
-                return d.platforms.filter((p) => p)
-            })
-        ),
-    ]
+    switch (graph) {
+        case 'platforms':
+            const platformsKeys = [
+                ...new Set(
+                    rawData.flatMap((d) => {
+                        d.platforms = d.platforms
+                            .split(',')
+                            .map((p) => p.trim())
+                        d.platforms = d.platforms.map((p) =>
+                            p.replace(/[\[\]']+/g, '')
+                        )
+                        return d.platforms.filter((p) => p)
+                    })
+                ),
+            ]
 
-    const genresKeys = [
-        ...new Set(
-            rawData.flatMap((d) => {
-                d.genres = d.genres.split(',').map((p) => p.trim())
-                d.genres = d.genres.map((p) => p.replace(/[\[\]']+/g, ''))
-                return d.genres.filter((g) => g)
-            })
-        ),
-    ]
+            const missingYearDataPlatform = rawData.reduce((acc, d) => {
+                const year = moment(d.date).format('YYYY')
+                if (year === 'Invalid date') return acc
 
-    const missingYearDataPlatform = rawData.reduce((acc, d) => {
-        const year = moment(d.date).format('YYYY')
-        if (year === 'Invalid date') return acc
+                const obj = acc.find((o) => o.year === year)
+                if (!obj) {
+                    const newObj = { year }
 
-        const obj = acc.find((o) => o.year === year)
-        if (!obj) {
-            const newObj = { year }
+                    // Initialize all platforms with a value of 0
+                    platformsKeys.forEach((platform) => {
+                        newObj[platform] = 0
+                    })
 
-            // Initialize all platforms with a value of 0
-            platformsKeys.forEach((platform) => {
-                newObj[platform] = 0
-            })
+                    d.platforms.forEach((platform) => {
+                        newObj[platform]++
+                    })
+                    acc.push(newObj)
+                } else {
+                    d.platforms.forEach((platform) => {
+                        obj[platform]++
+                    })
+                }
+                return acc
+            }, [])
 
-            d.platforms.forEach((platform) => {
-                newObj[platform]++
-            })
-            acc.push(newObj)
-        } else {
-            d.platforms.forEach((platform) => {
-                obj[platform]++
-            })
-        }
-        return acc
-    }, [])
-
-    const missingYearDataGenre = rawData.reduce((acc, d) => {
-        const year = moment(d.date).format('YYYY')
-        if (year === 'Invalid date') return acc
-
-        const obj = acc.find((o) => o.year === year)
-        if (!obj) {
-            const newObj = { year }
-
-            // Initialize all genres with a value of 0
-            genresKeys.forEach((genre) => {
-                newObj[genre] = 0
-            })
-
-            d.genres.forEach((genre) => {
-                newObj[genre]++
-            })
-            acc.push(newObj)
-        } else {
-            d.genres.forEach((genre) => {
-                obj[genre]++
-            })
-        }
-        return acc
-    }, [])
-
-    // Fill in missing years
-    const dataPlatform = missingYearDataPlatform.sort((a, b) => a.year - b.year)
-    for (let i = 1; i < missingYearDataPlatform.length; i++) {
-        const currentYear = missingYearDataPlatform[i].year.toString()
-        const previousYear = missingYearDataPlatform[i - 1].year.toString()
-        if (parseInt(currentYear) - parseInt(previousYear) > 1) {
-            for (
-                let j = parseInt(previousYear) + 1;
-                j < parseInt(currentYear);
-                j++
-            ) {
-                const newObj = { year: j.toString() }
-                platformsKeys.forEach((platform) => {
-                    newObj[platform] = 0
-                })
-                missingYearDataPlatform.splice(i, 0, newObj)
-                i++
+            // Fill in missing years
+            const dataPlatform = missingYearDataPlatform.sort(
+                (a, b) => a.year - b.year
+            )
+            for (let i = 1; i < missingYearDataPlatform.length; i++) {
+                const currentYear = missingYearDataPlatform[i].year.toString()
+                const previousYear =
+                    missingYearDataPlatform[i - 1].year.toString()
+                if (parseInt(currentYear) - parseInt(previousYear) > 1) {
+                    for (
+                        let j = parseInt(previousYear) + 1;
+                        j < parseInt(currentYear);
+                        j++
+                    ) {
+                        const newObj = { year: j.toString() }
+                        platformsKeys.forEach((platform) => {
+                            newObj[platform] = 0
+                        })
+                        missingYearDataPlatform.splice(i, 0, newObj)
+                        i++
+                    }
+                }
             }
-        }
-    }
 
-    const dataGenre = missingYearDataGenre.sort((a, b) => a.year - b.year)
-    for (let i = 1; i < missingYearDataGenre.length; i++) {
-        const currentYear = missingYearDataGenre[i].year.toString()
-        const previousYear = missingYearDataGenre[i - 1].year.toString()
-        if (parseInt(currentYear) - parseInt(previousYear) > 1) {
-            for (
-                let j = parseInt(previousYear) + 1;
-                j < parseInt(currentYear);
-                j++
-            ) {
-                const newObj = { year: j.toString() }
-                genresKeys.forEach((platform) => {
-                    newObj[platform] = 0
-                })
-                missingYearDataGenre.splice(i, 0, newObj)
-                i++
+            generateStreamChart('streamgraph', dataPlatform)
+            break
+
+        case 'genres':
+            const genresKeys = [
+                ...new Set(
+                    rawData.flatMap((d) => {
+                        d.genres = d.genres.split(',').map((p) => p.trim())
+                        d.genres = d.genres.map((p) =>
+                            p.replace(/[\[\]']+/g, '')
+                        )
+                        return d.genres.filter((g) => g)
+                    })
+                ),
+            ]
+
+            const missingYearDataGenre = rawData.reduce((acc, d) => {
+                const year = moment(d.date).format('YYYY')
+                if (year === 'Invalid date') return acc
+
+                const obj = acc.find((o) => o.year === year)
+                if (!obj) {
+                    const newObj = { year }
+
+                    // Initialize all genres with a value of 0
+                    genresKeys.forEach((genre) => {
+                        newObj[genre] = 0
+                    })
+
+                    d.genres.forEach((genre) => {
+                        newObj[genre]++
+                    })
+                    acc.push(newObj)
+                } else {
+                    d.genres.forEach((genre) => {
+                        obj[genre]++
+                    })
+                }
+                return acc
+            }, [])
+
+            const dataGenre = missingYearDataGenre.sort(
+                (a, b) => a.year - b.year
+            )
+            for (let i = 1; i < missingYearDataGenre.length; i++) {
+                const currentYear = missingYearDataGenre[i].year.toString()
+                const previousYear = missingYearDataGenre[i - 1].year.toString()
+                if (parseInt(currentYear) - parseInt(previousYear) > 1) {
+                    for (
+                        let j = parseInt(previousYear) + 1;
+                        j < parseInt(currentYear);
+                        j++
+                    ) {
+                        const newObj = { year: j.toString() }
+                        genresKeys.forEach((platform) => {
+                            newObj[platform] = 0
+                        })
+                        missingYearDataGenre.splice(i, 0, newObj)
+                        i++
+                    }
+                }
             }
-        }
-    }
 
-    generateStreamChart('streamgraph', dataPlatform)
-    // generateStreamChart('streamgraph', dataGenre)
+            generateStreamChart('streamgraph', dataGenre)
+            break
+
+        default:
+            break
+    }
 }
 
 export { loadData, renderGraphics, animateGraphics, renderStreamChart }
