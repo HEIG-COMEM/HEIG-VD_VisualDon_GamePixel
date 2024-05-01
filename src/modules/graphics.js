@@ -1,12 +1,12 @@
 import { csv } from 'd3-fetch'
 import moment from 'moment'
 import { select, selectAll } from 'd3-selection'
-import { easeElasticOut } from 'd3-ease'
+import { easeCubicIn, easeElasticOut } from 'd3-ease'
 import { scaleLinear, scaleBand, scaleOrdinal } from 'd3-scale'
 import { axisLeft, axisBottom } from 'd3-axis'
 import { transition } from 'd3-transition'
 import { extent } from 'd3-array'
-import { area, stackOffsetSilhouette, stack } from 'd3-shape'
+import { area, stackOffsetSilhouette, stack, line } from 'd3-shape'
 import { schemeDark2 } from 'd3-scale-chromatic'
 import { max } from 'd3-array'
 
@@ -331,6 +331,17 @@ function generateStreamChart(targetId, data) {
             return y(d[1])
         })
 
+    const theLine = area()
+        .x(function (d) {
+            return x(d.data.year)
+        })
+        .y0(function (d) {
+            return y(0)
+        })
+        .y1(function (d) {
+            return y(0)
+        })
+
     // Show the areas
     svg.selectAll('mylayers')
         .data(stackedData)
@@ -339,7 +350,13 @@ function generateStreamChart(targetId, data) {
         .style('fill', function (d) {
             return color(d.key)
         })
+        .attr('d', theLine)
+        .transition()
+        .duration(1000)
+        .ease(easeCubicIn)
         .attr('d', theArea)
+
+    svg.selectAll('path')
         .on('mouseover', mouseover)
         .on('mousemove', mousemove)
         .on('mouseleave', mouseleave)
