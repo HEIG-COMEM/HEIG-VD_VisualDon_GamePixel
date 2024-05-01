@@ -18,12 +18,10 @@ async function loadData() {
     return data
 }
 
-const DATA = loadData()
-
 async function parseData(year) {
     console.log('Parsing data for year:', year)
     year = moment(year).format('YYYY')
-    const data = await DATA
+    const data = await loadData()
     const games = data
         .filter((d) => moment(d.date).format('YYYY') === year)
         .map((d) => {
@@ -65,19 +63,12 @@ async function parseData(year) {
         .sort((a, b) => b[1] - a[1])
         .slice(0, 10)
 
-    sessionStorage.setItem(
-        `GamePixel-${year}`,
-        JSON.stringify({ sortedPlatforms, sortedGenres })
-    )
-
     return { sortedPlatforms, sortedGenres }
 }
 
 async function renderGraphics(yearNumber) {
     const year = yearNumber.toString()
-    const data = sessionStorage.getItem(`GamePixel-${year}`)
-        ? JSON.parse(sessionStorage.getItem(`GamePixel-${year}`))
-        : await parseData(year)
+    const data = await parseData(year)
 
     const genreTarget = `div[data-id="event-${year}"] .graph_genre`
     const plateformTarget = `div[data-id="event-${year}"] .graph_plateform`
@@ -205,9 +196,7 @@ function animateGraphic(target, data) {
 }
 
 async function animateGraphics(year) {
-    const data = sessionStorage.getItem(`GamePixel-${year}`)
-        ? JSON.parse(sessionStorage.getItem(`GamePixel-${year}`))
-        : await parseData(year)
+    const data = await parseData(year)
 
     const genreTarget = `div[data-id="event-${year}"] .graph_genre`
     const plateformTarget = `div[data-id="event-${year}"] .graph_plateform`
@@ -394,7 +383,7 @@ function generateStreamChart(targetId, data) {
 }
 
 async function renderStreamChart(graph) {
-    const rawData = await DATA
+    const rawData = await loadData()
 
     switch (graph) {
         case 'platforms':
