@@ -220,8 +220,6 @@ function generateStreamChart(targetId, data) {
 
     // set the dimensions and margins of the graph
     const margin = { top: 20, right: 30, bottom: 30, left: 60 },
-        // width = 460 - margin.left - margin.right,
-        // height = 400 - margin.top - margin.bottom
         width =
             select(`#${targetId}`).node().getBoundingClientRect().width -
             margin.left -
@@ -361,35 +359,6 @@ function generateStreamChart(targetId, data) {
         .on('mouseover', mouseover)
         .on('mousemove', mousemove)
         .on('mouseleave', mouseleave)
-
-    // target
-    //     .select('svg')
-    //     .selectAll('mylayers')
-    //     .data(stackedData)
-    //     .join(
-    //         (enter) => {
-    //             return enter
-    //                 .append('path')
-    //                 .attr('class', 'myArea')
-    //                 .style('fill', function (d) {
-    //                     return color(d.key)
-    //                 })
-    //                 .attr('d', theArea)
-    //                 .attr('transform', `translate(${margin.left}, 0)`)
-    //         },
-    //         (update) => {
-    //             return update
-    //                 .transition()
-    //                 .ease(easeElasticOut)
-    //                 .delay((d, i) => i * 150)
-    //                 .duration(800)
-    //                 .attr('d', theArea)
-    //         },
-    //         (exit) => exit.remove()
-    //     )
-    //     .on('mouseover', mouseover)
-    //     .on('mousemove', mousemove)
-    //     .on('mouseleave', mouseleave)
 }
 
 async function renderStreamChart(graph) {
