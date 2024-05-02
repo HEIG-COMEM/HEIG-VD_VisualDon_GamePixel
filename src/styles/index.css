@@ -1,6 +1,8 @@
 /* @import 'normalize.css'; */
 @import 'variables.css';
 
+@import 'loading.css';
+
 @import 'typography.css';
 @import 'structure.css';
 @import 'display-infos/index.css';

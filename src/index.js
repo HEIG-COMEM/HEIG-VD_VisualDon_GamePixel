@@ -2,6 +2,8 @@ import { displayEvent, showCard, hideCard } from './helper.js'
 import EventManager from './modules/EventManager.js'
 import { renderStreamChart } from './modules/graphics.js'
 
+import './modules/loading.js'
+
 import './elements/event-item.js'
 import './elements/game-item.js'
 import './elements/game-card.js'
