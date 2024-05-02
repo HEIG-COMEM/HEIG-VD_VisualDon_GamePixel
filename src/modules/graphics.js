@@ -6,8 +6,7 @@ import { scaleLinear, scaleBand, scaleOrdinal } from 'd3-scale'
 import { axisLeft, axisBottom } from 'd3-axis'
 import { transition } from 'd3-transition'
 import { extent } from 'd3-array'
-import { area, stackOffsetSilhouette, stack, line } from 'd3-shape'
-import {} from 'd3-scale-chromatic'
+import { area, stackOffsetSilhouette, stack } from 'd3-shape'
 import { max } from 'd3-array'
 
 const dataReady = new CustomEvent('dataReady')
