@@ -13,7 +13,10 @@ timeline.addEventListener('click', (e) => {
 const prev = () => {
     const active = document.querySelector('#timeline .active')
     const prev = active.previousElementSibling?.getAttribute('href')
-    if (!prev) return
+    if (!prev) {
+        document.querySelector('#start')?.scrollIntoView({ behavior: 'smooth' })
+        return
+    }
 
     window.location.hash = `event-${prev.split('#').at(-1)}`
 }
@@ -21,7 +24,12 @@ const prev = () => {
 const next = () => {
     const active = document.querySelector('#timeline .active')
     const next = active.nextElementSibling?.getAttribute('href')
-    if (!next) return
+    if (!next) {
+        document
+            .querySelector('#summary')
+            ?.scrollIntoView({ behavior: 'smooth' })
+        return
+    }
 
     window.location.hash = `event-${next.split('#').at(-1)}`
 }
@@ -60,10 +68,10 @@ events.addEventListener('wheel', function (e) {
     const nextA = active.parentElement.nextElementSibling
     const prevA = active.parentElement.previousElementSibling
 
-    if (delta > 0 && nextA) {
+    if (delta > 0) {
         next()
         return
-    } else if (delta < 0 && prevA) {
+    } else if (delta < 0) {
         prev()
         return
     }

@@ -1,5 +1,6 @@
 import { renderGraphics } from './graphics.js'
 const eventsReady = new CustomEvent('events_ready')
+const renderingDone = new CustomEvent('rendering_done')
 
 export default class EventManager {
     #events
@@ -27,6 +28,7 @@ export default class EventManager {
     }
 
     #renderEvents() {
+        let nbEvents = this.#events.length
         this.#events.forEach((event) => {
             const eventItem = document.createElement('event-item')
 
@@ -40,7 +42,10 @@ export default class EventManager {
             document
                 .querySelector('#infos-display #events')
                 .appendChild(eventItem)
-            renderGraphics(event.date)
+
+            renderGraphics(event.date).then(() => {
+                if (--nbEvents === 0) document.dispatchEvent(renderingDone)
+            })
         })
     }
 

@@ -1,6 +1,8 @@
 import { displayEvent, showCard, hideCard } from './helper.js'
 import EventManager from './modules/EventManager.js'
-import { loadData } from './modules/graphics.js'
+import { renderStreamChart } from './modules/graphics.js'
+
+import './modules/loading.js'
 
 import './elements/event-item.js'
 import './elements/game-item.js'
@@ -48,3 +50,11 @@ document.querySelector('#game-cards').addEventListener('click', (e) => {
     window.history.back()
 })
 window.addEventListener('popstate', hideCard)
+
+renderStreamChart('genres')
+
+document
+    .querySelector('#summary-switch input')
+    .addEventListener('change', (e) => {
+        renderStreamChart(e.target.checked ? 'platforms' : 'genres')
+    })

@@ -61,6 +61,48 @@ const SCRIPT = {
         count: 0,
         destroy_trigger: true,
     },
+    summary: {
+        trigger_id: 'summary',
+        steps: [
+            {
+                position: {
+                    x: 50,
+                    y: 50,
+                    unit: 'viewport',
+                },
+                text: "Tu t'es bien amusé ?",
+            },
+            {
+                position: {
+                    x: 50,
+                    y: 50,
+                    unit: 'viewport',
+                },
+                text: 'Te voilà arrivé à la fin de cette aventure...',
+            },
+            {
+                position: {
+                    x: 50,
+                    y: 50,
+                    unit: 'viewport',
+                },
+                text: "Mais ce n'est pas la fin de l'histoire des jeux vidéo !",
+            },
+            {
+                position: {
+                    x: 50,
+                    y: 50,
+                    unit: 'viewport',
+                },
+                text: "Dans cette section tu trouveras un graphique représentant l'évolution des genres et des plateformes au fils des années.",
+            },
+        ],
+        isSkippable: false,
+        isRepeatable: false,
+        count: 0,
+        destroy_trigger: false,
+        showBackDrop: true,
+    },
 }
 
 const preventDefault = (e) => e.preventDefault()
@@ -81,6 +123,13 @@ Object.keys(SCRIPT).forEach((key) => {
                     triggerSection.addEventListener('wheel', preventDefault)
                     window.addEventListener('keydown', preventDefault)
                 }
+
+                if (script.showBackDrop) {
+                    const backDrop = document.createElement('div')
+                    backDrop.id = 'pixie-backdrop'
+                    document.body.appendChild(backDrop)
+                }
+
                 for (const step of script.steps) {
                     pixie.move(
                         step.position.x,
@@ -92,6 +141,9 @@ Object.keys(SCRIPT).forEach((key) => {
                 }
                 script.count++
                 pixie.moveToIdle()
+
+                if (script.showBackDrop)
+                    document.querySelector('#pixie-backdrop').remove()
 
                 if (!script.isSkippable) {
                     triggerSection.removeEventListener('wheel', preventDefault)
