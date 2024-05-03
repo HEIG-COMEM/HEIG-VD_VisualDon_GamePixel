@@ -25,7 +25,7 @@ const SCRIPT = {
             },
             {
                 position: {
-                    x: 25,
+                    x: 50,
                     y: 50,
                     unit: 'viewport',
                 },
@@ -41,7 +41,7 @@ const SCRIPT = {
             },
             {
                 position: {
-                    x: 75,
+                    x: 50,
                     y: 50,
                     unit: 'viewport',
                 },
