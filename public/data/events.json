@@ -8,19 +8,19 @@
                 {
                     "name": "Tennis for Two",
                     "date": "1958-10-18",
-                    "description": "Un jeu où les joueurs placent des murs de labyrinthe, des morceaux de fromage et (dans certaines versions) des verres de martini au moyen d'un stylo lumineux interagissant avec l'écran.",
+                    "description": "Jeu de tennis à deux joueurs sur un oscilloscope, avec contrôle de la balle via des manettes, permettant de servir et de renvoyer la balle de chaque côté du filet.",
                     "poster": "tennis-for-two.jpg",
                     "rating": 2.9,
-                    "plays": 6.0,
-                    "genres": ["Card & Board Game"],
-                    "platforms": ["Legacy Computer"]
+                    "plays": 64.0,
+                    "genres": ["Arcade", "Sport"],
+                    "platforms": ["Donner Model 30"]
                 },
                 {
                     "name": "Spacewar!",
                     "date": "1962-04-30",
                     "description": "Spacewar! est l'un des premiers jeux vidéo numériques, opposant deux joueurs contrôlant des vaisseaux spatiaux pour se détruire mutuellement, tout en évitant une étoile centrale. Il a été porté sur la machine à pièces PDP-11 sous le nom de Galaxy Game en 1971, avant la sortie officielle de Computer Space. Initialement installé à l'université de Stanford, il a été le précurseur des jeux vidéo d'arcade, bien qu'au départ une seule unité ait été construite.",
                     "poster": "spacewar.jpg",
-                    "rating": 3.0,
+                    "rating": 2.9,
                     "plays": 89.0,
                     "genres": ["Shooter", "Simulator"],
                     "platforms": ["PDP-11", "PDP-1"]
