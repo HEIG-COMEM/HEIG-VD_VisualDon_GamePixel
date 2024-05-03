@@ -1,6 +1,6 @@
 import { displayEvent, showCard, hideCard } from './helper.js'
 import EventManager from './modules/EventManager.js'
-import { renderStreamChart } from './modules/graphics.js'
+import StreamCharts from './modules/StreamCharts.js'
 
 import './modules/loading.js'
 
@@ -51,10 +51,13 @@ document.querySelector('#game-cards').addEventListener('click', (e) => {
 })
 window.addEventListener('popstate', hideCard)
 
-renderStreamChart('genres')
+// renderStreamCharts()
+
+const streamCharts = new StreamCharts()
 
 document
     .querySelector('#summary-switch input')
     .addEventListener('change', (e) => {
-        renderStreamChart(e.target.checked ? 'platforms' : 'genres')
+        // animateStreamChart(e.target.checked ? 'platforms' : 'genres')
+        streamCharts.animate(e.target.checked ? 'platforms' : 'genres')
     })
