@@ -190,14 +190,17 @@ export default class StreamCharts {
     }
 
     #generateStreamCharts() {
-        // Calculate the tick Values
-        const tick = Math.floor(this.dataGenre.length / 4)
-        const tickValues = [
-            this.dataGenre[0].year,
-            this.dataGenre[tick * 2].year,
-            this.dataGenre[tick * 3].year,
-            this.dataGenre.at(-1).year,
-        ]
+        this.#generateStreamChart(this.stackedDataPlatform, 'platforms')
+        this.#generateStreamChart(this.stackedDataGenre, 'genres')
+
+        // Calculate ticks for the X axis
+        const NB_TICKS = 6
+        const tickValues = []
+        const tick = Math.floor(this.dataGenre.length / (NB_TICKS - 1))
+        for (let i = 0; i < NB_TICKS - 1; i++) {
+            tickValues.push(this.dataGenre[tick * i].year)
+        }
+        tickValues.push(this.dataGenre.at(-1).year)
 
         // Add X axis
         const x = this.#x(this.dataGenre)
@@ -223,10 +226,6 @@ export default class StreamCharts {
             .attr('y', this.height - 30)
             .text('Time (year)')
             .style('fill', '#f5f5f5')
-
-        this.#generateStreamChart(this.stackedDataPlatform, 'platforms')
-
-        this.#generateStreamChart(this.stackedDataGenre, 'genres')
 
         this.svg
             .selectAll('path')
