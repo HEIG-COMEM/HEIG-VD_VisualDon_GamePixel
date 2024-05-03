@@ -58,7 +58,7 @@ const SCRIPT = {
         ],
         isSkippable: false,
         isRepeatable: false,
-        count: 0,
+        count: sessionStorage.getItem('GamePixel-script-tutorial') || 0,
         destroy_trigger: true,
     },
     summary: {
@@ -99,7 +99,7 @@ const SCRIPT = {
         ],
         isSkippable: false,
         isRepeatable: false,
-        count: 0,
+        count: sessionStorage.getItem('GamePixel-script-summary') || 0,
         destroy_trigger: false,
         showBackDrop: true,
     },
@@ -118,7 +118,11 @@ Object.keys(SCRIPT).forEach((key) => {
         'section_visible',
         () => {
             async function runScript() {
-                if (script.count >= 1 && !script.isRepeatable) return
+                if (script.count >= 1 && !script.isRepeatable) {
+                    if (script.destroy_trigger) triggerSection.remove()
+                    pixie.moveToIdle()
+                    return
+                }
                 if (!script.isSkippable) {
                     triggerSection.addEventListener('wheel', preventDefault)
                     window.addEventListener('keydown', preventDefault)
@@ -139,7 +143,10 @@ Object.keys(SCRIPT).forEach((key) => {
                     pixie.say(step.text)
                     await pixie.wait()
                 }
-                script.count++
+                sessionStorage.setItem(
+                    `GamePixel-script-${key}`,
+                    script.count + 1
+                )
                 pixie.moveToIdle()
 
                 if (script.showBackDrop)
