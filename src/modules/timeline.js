@@ -65,8 +65,6 @@ events.addEventListener('wheel', function (e) {
     if (!active) return
 
     const delta = e.deltaY
-    const nextA = active.parentElement.nextElementSibling
-    const prevA = active.parentElement.previousElementSibling
 
     if (delta > 0) {
         next()

@@ -26,6 +26,19 @@ const displayEvent = async (year = null) => {
     timeline.querySelector('.active')?.classList.remove('active')
     timeline.querySelector(`[href="#${year}"]`).classList.add('active')
 
+    const last = document
+        .querySelector('event-item:last-of-type')
+        .getAttribute('year')
+    const first = document
+        .querySelector('event-item:first-of-type')
+        .getAttribute('year')
+    year === last
+        ? document.querySelector('#next span').classList.add('go-down')
+        : document.querySelector('#next span').classList.remove('go-down')
+    year === first
+        ? document.querySelector('#prev span').classList.add('go-up')
+        : document.querySelector('#prev span').classList.remove('go-up')
+
     document
         .querySelector('#infos-display')
         .addEventListener('element_in_viewport', () => {

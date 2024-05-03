@@ -51,4 +51,13 @@ h6 {
 
 .material-icons {
     vertical-align: middle;
+    transition: transform 0.3s ease-in-out;
+}
+
+.material-icons.go-down {
+    transform: rotate(90deg);
+}
+
+.material-icons.go-up {
+    transform: rotate(90deg);
 }
