@@ -1,15 +1,5 @@
 # 🎮 GamePixel - Visualisation des données de l'histoire graphique des jeux vidéo
 
-## Table des matières
-
--   [✍️ Contexte](#✍️-contexte)
--   [📖 Description](#📖-description)
-    -   [🚀 Application dynamique](#🚀-application-dynamique)
--   [🎯 But](#🎯-but)
--   [🎨 Wireframes](#🎨-wireframes)
--   [🧑‍💻 Site web](#🧑‍💻-site-web)
--   [📚 Références](#📚-références)
-
 ## ✍️ Contexte
 
 Les données utilisées dans ce projet proviennent de [Kaggle](https://www.kaggle.com), une plateforme de data science. Elles ont été mises à disposition par Simon Garanin. Les données ont été extraites à partir du site web [backloggd.com](https://backloggd.com). Ces données, datant du 02/10/2023, sont complétées par des informations supplémentaires provenant de diverses sources, consolidées pour créer notre propre dataset personnalisé.
