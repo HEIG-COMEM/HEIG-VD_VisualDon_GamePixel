@@ -82,14 +82,14 @@ async function renderGraphics(yearNumber) {
         generateBarGraph(genreTarget, data.sortedGenres)
     } else {
         document.querySelector(genreTarget).innerHTML =
-            '<p class="small no-data">No data available for this year</p>'
+            '<p class="small no-data">Pas de données disponible cette année</p>'
     }
 
     if (data.sortedPlatforms.length) {
         generateBarGraph(plateformTarget, data.sortedPlatforms)
     } else {
         document.querySelector(plateformTarget).innerHTML =
-            '<p class="small no-data">No data available for this year</p>'
+            '<p class="small no-data">Pas de données disponible cette année</p>'
     }
 }
 
