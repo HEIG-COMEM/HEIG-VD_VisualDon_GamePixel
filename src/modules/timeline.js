@@ -48,10 +48,18 @@ document.querySelector('#events-carousel').addEventListener('click', (e) => {
     }
 })
 
+document
+    .querySelector('#infos-display')
+    .addEventListener('wheel', (e) => e.preventDefault())
+
 let wait = false
+let lastCall = null
 // User scroll
 events.addEventListener('wheel', function (e) {
     e.preventDefault()
+
+    if (lastCall && Date.now() - lastCall < 1000) return // Prevent multiple scrolls (1000ms delay)
+    lastCall = Date.now()
 
     // Prevent multiple scrolls
     if (wait) return
