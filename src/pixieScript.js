@@ -8,7 +8,7 @@ setTimeout(() => {
 
     const h4 = document.querySelector('#start h1').getBoundingClientRect()
 
-    pixie.move(h4.right + 5, h4.bottom - 42)
+    pixie.move(h4.right + 5, h4.bottom - 38)
 }, 200)
 
 const SCRIPT = {

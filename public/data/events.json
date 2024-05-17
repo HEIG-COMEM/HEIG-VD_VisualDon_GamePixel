@@ -28,7 +28,7 @@
                 {
                     "name": "OXO",
                     "date": "1952-12-31",
-                    "description": "OXO est un jeu informatique développé par Alexander S. Douglas en 1952 pour l'ordinateur EDSAC, qui simule un jeu de morpions, aussi parfois appelé Tic-tac-toe. OXO est le premier jeu connu à afficher des images sur un écran vidéo. Pour jouer à OXO, le joueur entrait des données à l'aide d'une manette de téléphone rotative, et les données de sortie étaient affichées sur le tube cathodique à matrice de points 35×16 de l'ordinateur. Chaque partie était jouée contre un adversaire artificiellement intelligent",
+                    "description": "OXO est un jeu informatique développé par Alexander S. Douglas en 1952 pour l'ordinateur EDSAC, qui simule un jeu de morpions, aussi parfois appelé Tic-tac-toe. OXO est le premier jeu connu à afficher des images sur un écran vidéo. Pour jouer à OXO, le joueur entrait des données à l'aide d'une manette de téléphone rotative, et les données de sortie étaient affichées sur le tube cathodique à matrice de points 35x16 de l'ordinateur. Chaque partie était jouée contre un adversaire artificiellement intelligent",
                     "poster": "oxo.jpg",
                     "rating": 3.0,
                     "plays": 34.0,
@@ -61,10 +61,8 @@
                     "plays": 2403.0,
                     "genres": ["Arcade", "Shooter"],
                     "platforms": [
-                        "iOS",
                         "Arcade",
                         "Sega Saturn",
-                        "Mobile",
                         "Atari 2600",
                         "WonderSwan",
                         "SG-1000",
@@ -97,16 +95,11 @@
                     "plays": 6421.0,
                     "genres": ["Arcade"],
                     "platforms": [
-                        "Windows PC",
-                        "Xbox 360",
                         "Arcade",
-                        "Mobile",
                         "PC-98",
-                        "Windows Phone",
                         "FM-7",
                         "Sharp X1",
                         "Texas Instruments TI-99",
-                        "BlackBerry OS",
                         "Commodore VIC-20",
                         "Sharp MZ-2200",
                         "Palm OS"
@@ -147,15 +140,7 @@
                     "rating": 3.5,
                     "plays": 22833.0,
                     "genres": ["Adventure", "Platform"],
-                    "platforms": [
-                        "Wii U",
-                        "Arcade",
-                        "Wii",
-                        "Family Computer Disk System",
-                        "Nintendo 3DS",
-                        "NES",
-                        "Family Computer (FAMICOM)"
-                    ]
+                    "platforms": ["Arcade", "NES", "Family Computer (FAMICOM)"]
                 },
                 {
                     "name": "The Legend of Zelda",
@@ -166,10 +151,7 @@
                     "plays": 12124.0,
                     "genres": ["Adventure"],
                     "platforms": [
-                        "Wii U",
-                        "Wii",
                         "Family Computer Disk System",
-                        "Nintendo 3DS",
                         "NES",
                         "Family Computer (FAMICOM)"
                     ]
@@ -183,9 +165,7 @@
                     "plays": 5914.0,
                     "genres": ["Adventure", "Platform"],
                     "platforms": [
-                        "Wii U",
                         "Arcade",
-                        "Wii",
                         "Family Computer Disk System",
                         "Nintendo 3DS",
                         "NES"
@@ -206,7 +186,7 @@
                     "rating": 4.1,
                     "plays": 27794.0,
                     "genres": ["Adventure", "Platform"],
-                    "platforms": ["Wii U", "Wii", "Nintendo 64"]
+                    "platforms": ["Nintendo 64"]
                 },
                 {
                     "name": "Final Fantasy VII",
@@ -216,12 +196,7 @@
                     "rating": 4.2,
                     "plays": 18162.0,
                     "genres": ["Adventure", "RPG", "Turn Based Strategy"],
-                    "platforms": [
-                        "PlayStation 3",
-                        "PlayStation",
-                        "PlayStation Vita",
-                        "PlayStation Portable"
-                    ]
+                    "platforms": ["PlayStation", "Windows PC"]
                 },
                 {
                     "name": "Tomb Raider",
@@ -294,13 +269,13 @@
                     "plays": 9567.0,
                     "genres": ["Arcade", "Indie", "Puzzle", "Strategy"],
                     "platforms": [
-                        "Windows PC",
                         "Android",
+                        "iOS",
+                        "PlayStation Portable",
+                        "Windows PC",
                         "Mac",
                         "Xbox 360",
-                        "iOS",
-                        "PlayStation 3",
-                        "PlayStation Portable"
+                        "PlayStation 3"
                     ]
                 },
                 {
@@ -312,10 +287,10 @@
                     "plays": 1858.0,
                     "genres": ["Arcade", "Puzzle", "Strategy"],
                     "platforms": [
-                        "Windows PC",
                         "Android",
                         "iOS",
                         "Windows Phone",
+                        "Windows PC",
                         "Amazon Fire TV"
                     ]
                 },
@@ -420,9 +395,9 @@
                     "plays": 19027.0,
                     "genres": ["Adventure", "Puzzle", "Shooter"],
                     "platforms": [
+                        "PlayStation VR",
                         "Windows PC",
                         "PlayStation 4",
-                        "PlayStation VR",
                         "Xbox One",
                         "PlayStation 5",
                         "Google Stadia",
