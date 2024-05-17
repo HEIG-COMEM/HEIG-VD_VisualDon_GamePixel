@@ -21,7 +21,7 @@ const SCRIPT = {
                     y: 50,
                     unit: 'viewport',
                 },
-                text: "Salut, je suis Pixie le pixel. Je vais t'accompagner dans ton aventure",
+                text: "Salut, je suis Pixie le pixel. Je vais t'accompagner dans ton aventure.",
             },
             {
                 position: {
@@ -37,7 +37,7 @@ const SCRIPT = {
                     y: 50,
                     unit: 'viewport',
                 },
-                text: "Chaques événements est accompagné d'une description et d'une liste de jeux qui ont marqué cette période.",
+                text: "Chaque événement est accompagné d'une description et d'une liste de jeux marquants de cette période.",
             },
             {
                 position: {
@@ -45,7 +45,7 @@ const SCRIPT = {
                     y: 50,
                     unit: 'viewport',
                 },
-                text: 'Tu peux clicker sur un jeu pour en savoir plus.',
+                text: 'Tu peux cliquer sur un jeu pour en savoir plus.',
             },
             {
                 position: {
@@ -94,7 +94,7 @@ const SCRIPT = {
                     y: 50,
                     unit: 'viewport',
                 },
-                text: "Dans cette section tu trouveras un graphique représentant l'évolution des genres et des plateformes au fils des années.",
+                text: "Dans cette section tu trouveras un graphique représentant l'évolution des genres et des plateformes au fil des années.",
             },
         ],
         isSkippable: false,
