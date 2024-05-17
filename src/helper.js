@@ -19,6 +19,16 @@ const displayEvent = async (year = null) => {
         `event-item div[data-id="event-${year}"]`
     )
 
+    if (!newSection) {
+        const first = document
+            .querySelector('#timeline a')
+            .getAttribute('href')
+            .split('#')
+            .at(-1)
+        window.location.hash = `event-${first}`
+        return
+    }
+
     oldSection?.classList?.remove('active')
     newSection?.classList?.add('active')
 
